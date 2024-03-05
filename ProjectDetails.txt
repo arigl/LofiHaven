@@ -1,0 +1,25 @@
+Main idea:
+- Lofi music player with a Threejs scene that changes based on the song
+- Default scene will have a music player on the left, and a 3d scene on the right.
+- Player will include: play, pause, skip, previous, volume
+    - Music information will include: Name, Album art, youtube or spotify link possibly 
+- Expand button on the 3d scene will make it full screen, with the player transition to a floating widget that shows the song 
+- Start with one environment, but add others over time
+- Add a lock icon to the 3d scene that makes it so you can't interact with it 
+
+Music
+- include attributes alongside each song to change how the 3d scene looks 
+- use creative commons songs only
+
+Name ideas:
+- LofiCompanion.com 
+- lofi.dev 
+
+3D Model Ideas:
+- have it by at the top of a "building", aka a rectangle under it 
+- Panning around shows an environment
+    - Snow
+    - Night
+    - City 
+    - Day
+    - Rain 

@@ -1,0 +1,70 @@
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(44, 42, 55);
+}
+
+.component {
+  margin: 1em auto; /* Center horizontally */
+}
+
+@media (max-width: 900px) {
+  .component {
+    width: 100%; /* Adjusted for smaller screens */
+  }
+}
+
+.musicCover {
+  border-radius: 10%;
+}
+
+.playButton {
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+}
+.subTitle {
+  margin-top: -1em;
+  color: #4f4f4f;
+}
+
+.time {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #828282;
+  font-size: smaller;
+}
+
+.timeline {
+  width: 100%;
+  background-color: #27ae60;
+}
+
+.controls {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="range"] {
+  background-color: #27ae60;
+}
+
+/* @media (max-width: 900px) {
+  .component {
+    width: 50%;
+  }
+} */
