@@ -8,14 +8,16 @@ import { FiVolume2 } from "react-icons/fi";
 import { IconContext } from "react-icons"; // for customizing the icons
 import musicData from "../data/musicData.js";
 
-export default function Player() {
+export default function Player(props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [howl, setHowl] = useState(null);
 
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [seconds, setSeconds] = useState(); // current position of the audio in seconds
+
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [volume, setVolume] = useState(1);
 
   useEffect(() => {
     if (howl) {
@@ -26,6 +28,7 @@ export default function Player() {
     const sound = new Howl({
       src: [musicData[currentTrackIndex].audio],
       autoplay: true,
+      volume: volume,
       onload: () => {
         setDuration(sound.duration());
       },
@@ -91,6 +94,11 @@ export default function Player() {
     }
   };
 
+  const shuffleButton = () => {
+    const randomIndex = Math.floor(Math.random() * musicData.length);
+    switchTrack(randomIndex);
+  };
+
   const prevTrack = () => {
     const newIndex =
       currentTrackIndex - 1 < 0 ? musicData.length - 1 : currentTrackIndex - 1;
@@ -110,15 +118,17 @@ export default function Player() {
     )}`;
   }
 
-  // function step() {
-  //   console.log("STEP 0");
-  //   if (isPlaying) {
-  //     console.log("STEP");
-  //     setCurrentTime(howl.seek());
-  //     requestAnimationFrame(step);
-  //   }
-  //   requestAnimationFrame(step);
-  // }
+  const toggleVolumeSlider = () => {
+    setShowVolumeSlider((prevState) => !prevState);
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (howl) {
+      howl.volume(newVolume);
+    }
+  };
 
   const containerStyle = {
     display: "flex",
@@ -142,79 +152,157 @@ export default function Player() {
   return (
     <div className="component" style={containerStyle}>
       {/* <h2>Playing Now</h2> */}
-      <div className="header">
-        <button className="header--menu--button">
-          <img
-            className="menu--button--icon"
-            src="/Menu.png"
-            style={imageHeaderStyle}
-          ></img>
-        </button>
-        <h1 className="header--title">Lofi Haven</h1>
-        <h1 style={seperatorStyle}>|</h1>
-        <p className="header--subtitle">Now Playing</p>
-      </div>
+      {!props.isFullscreen && (
+        <div className="header">
+          <button className="header--menu--button">
+            <img
+              className="menu--button--icon"
+              src="/Menu.png"
+              style={imageHeaderStyle}
+            ></img>
+          </button>
+          <h1 className="header--title">Lofi Haven</h1>
+          <h1 style={seperatorStyle}>|</h1>
+          <p className="header--subtitle">Now Playing</p>
+        </div>
+      )}
       <div className="overlay-container">
-        <img className="musicCover" src={musicData[currentTrackIndex].art} />
-
-        <div className="timeline--container">
-          <div className="time">
-            <p>{formatTime(currentTime)}</p>
-            <p>{formatTime(duration)}</p>
-          </div>
-          <input
-            type="range"
-            min="0"
-            max={duration}
-            defaultValue="0"
-            value={currentTime}
-            className="timeline"
-            onChange={(e) => {
-              sound.seek(e.target.value);
-            }}
-          />
-        </div>
-        <div>
-          <h3 className="title">{musicData[currentTrackIndex].title}</h3>
-          <p className="subTitle">{musicData[currentTrackIndex].artist}</p>
-        </div>
-      </div>
-
-      <div className="controls">
-        <button className="volumeButton">
-          <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-            <FiVolume2 />
-          </IconContext.Provider>
-        </button>
-        <button className="prevButton" onClick={prevTrack}>
-          <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-            <BiSkipPrevious />
-          </IconContext.Provider>
-        </button>
-        {!isPlaying ? (
-          <button className="playButton" onClick={playPause}>
-            <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-              <AiFillPlayCircle />
-            </IconContext.Provider>
-          </button>
-        ) : (
-          <button className="playButton" onClick={playPause}>
-            <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-              <AiFillPauseCircle />
-            </IconContext.Provider>
-          </button>
+        {!props.isFullscreen && (
+          <img className="musicCover" src={musicData[currentTrackIndex].art} />
         )}
-        <button className="nextButton" onClick={nextTrack}>
-          <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-            <BiSkipNext />
-          </IconContext.Provider>
-        </button>
-        <button className="shuffleButton">
-          <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-            <BiShuffle />
-          </IconContext.Provider>
-        </button>
+        {!props.isFullscreen && (
+          <div className="timeline--container">
+            <div className="time">
+              <p>{formatTime(currentTime)}</p>
+              <p>{formatTime(duration)}</p>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              defaultValue="0"
+              value={currentTime}
+              className="timeline"
+              onChange={(e) => {
+                if (howl) {
+                  howl.seek(e.target.value);
+                }
+              }}
+            />
+          </div>
+        )}
+
+        {!props.isFullscreen && (
+          <div>
+            <h3 className="title">{musicData[currentTrackIndex].title}</h3>
+            <p className="subTitle">{musicData[currentTrackIndex].artist}</p>
+          </div>
+        )}
       </div>
+      {!props.isFullscreen && (
+        <div className="controls">
+          <button className="volumeButton" onClick={toggleVolumeSlider}>
+            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+              <FiVolume2 />
+            </IconContext.Provider>
+          </button>
+          {showVolumeSlider && (
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+            />
+          )}
+          <button className="prevButton" onClick={prevTrack}>
+            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+              <BiSkipPrevious />
+            </IconContext.Provider>
+          </button>
+          {!isPlaying ? (
+            <button className="playButton" onClick={playPause}>
+              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+                <AiFillPlayCircle />
+              </IconContext.Provider>
+            </button>
+          ) : (
+            <button className="playButton" onClick={playPause}>
+              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+                <AiFillPauseCircle />
+              </IconContext.Provider>
+            </button>
+          )}
+          <button className="nextButton" onClick={nextTrack}>
+            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+              <BiSkipNext />
+            </IconContext.Provider>
+          </button>
+          <button className="shuffleButton" onClick={shuffleButton}>
+            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+              <BiShuffle />
+            </IconContext.Provider>
+          </button>
+        </div>
+      )}
+      {props.isFullscreen && (
+        <div className="fs--controls">
+          <img
+            className="fs--musicCover"
+            src={musicData[currentTrackIndex].art}
+          />
+          <div className="fs--details">
+            <h3 className="fs--title">{musicData[currentTrackIndex].title}</h3>
+            <p className="fs--subTitle">
+              {musicData[currentTrackIndex].artist}
+            </p>
+          </div>
+          <button className="volumeButton" onClick={toggleVolumeSlider}>
+            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+              <FiVolume2 />
+            </IconContext.Provider>
+          </button>
+          {showVolumeSlider && (
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+            />
+          )}
+          <button className="prevButton" onClick={prevTrack}>
+            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+              <BiSkipPrevious />
+            </IconContext.Provider>
+          </button>
+          {!isPlaying ? (
+            <button className="playButton" onClick={playPause}>
+              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+                <AiFillPlayCircle />
+              </IconContext.Provider>
+            </button>
+          ) : (
+            <button className="playButton" onClick={playPause}>
+              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+                <AiFillPauseCircle />
+              </IconContext.Provider>
+            </button>
+          )}
+          <button className="nextButton" onClick={nextTrack}>
+            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+              <BiSkipNext />
+            </IconContext.Provider>
+          </button>
+          <button className="shuffleButton" onClick={shuffleButton}>
+            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+              <BiShuffle />
+            </IconContext.Provider>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

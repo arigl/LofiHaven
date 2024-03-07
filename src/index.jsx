@@ -24,7 +24,7 @@ const fullSizeCanvasStyle = {
   left: 0,
   width: "100vw",
   height: "100%",
-  zIndex: 9999, // Ensure canvas is above everything else
+  // zIndex: 9999, // Ensure canvas is above everything else
 };
 
 const normalCanvasStyle = {
@@ -35,6 +35,16 @@ const normalCanvasStyle = {
 const normalPlayerContainerStyle = {
   width: "35%", // Half of the viewport width
   height: "100%", // Adjust as needed
+};
+
+const fullscreenPlayerContainerStyle = {
+  position: "fixed", // Position fixed to keep it relative to the viewport
+  width: "30%", // Adjust as needed
+  height: "10%", // Adjust as needed
+  left: "50%", // Center horizontally
+  bottom: "5%", // 5% up from the bottom
+  transform: "translateX(-50%)", // Adjust for horizontal centering
+  zIndex: 9999, // Adjust as needed
 };
 
 function App() {
@@ -60,9 +70,13 @@ function App() {
     <div style={containerStyle}>
       <Leva hidden />
       <div
-        style={!isFullscreen ? normalPlayerContainerStyle : { display: "none" }}
+        style={
+          !isFullscreen
+            ? normalPlayerContainerStyle
+            : fullscreenPlayerContainerStyle
+        }
       >
-        {<Player />}
+        {<Player isFullscreen={isFullscreen} />}
       </div>
       <div style={isFullscreen ? fullSizeCanvasStyle : normalCanvasStyle}>
         <Canvas

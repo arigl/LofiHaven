@@ -138,6 +138,35 @@ body,
   object-fit: fill;
 }
 
+.fs--musicCover {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: fill;
+}
+
+.fs--details {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.fs--title {
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fs--subTitle {
+  margin-top: -1em;
+  color: #747474;
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
 .overlay-container:hover .time {
   position: absolute;
   bottom: 20px;
@@ -158,6 +187,19 @@ body,
 }
 
 .controls {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 10%;
+}
+
+.fs--controls {
   width: 70%;
   display: flex;
   flex-direction: row;
