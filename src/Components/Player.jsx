@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import useSound from "use-sound"; // for handling the sound
 import qala from "/music/lofisong.mp3"; // importing the music
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
-import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
+import { BiSkipNext, BiSkipPrevious, BiShuffle } from "react-icons/bi"; // icons for next and previous track
+import { FiVolume2 } from "react-icons/fi";
 import { IconContext } from "react-icons"; // for customizing the icons
 
 export default function Player() {
@@ -56,68 +57,95 @@ export default function Player() {
     alignItems: "center",
     justifyContent: "center",
     height: "100%", // Adjusted to 100%
-    width: "50vw", // Adjusted to 50%
+    width: "35vw", // Adjusted to 50%
     margin: "0 auto", // Center horizontally
   };
 
-  const imageStyle = {
-    maxWidth: "50%",
-    maxHeight: "50%",
+  const imageHeaderStyle = {
+    maxWidth: "30px",
+    maxHeight: "30px",
+  };
+
+  const seperatorStyle = {
+    opacity: "20%",
   };
 
   return (
     <div className="component" style={containerStyle}>
       {/* <h2>Playing Now</h2> */}
-      <img className="musicCover" src="/Lofi.jpg" style={imageStyle} />
-      <div>
-        <h3 className="title">Mixed Emotions</h3>
-        <p className="subTitle">samtrax</p>
+      <div className="header">
+        <button className="header--menu--button">
+          <img
+            className="menu--button--icon"
+            src="/Menu.png"
+            style={imageHeaderStyle}
+          ></img>
+        </button>
+        <h1 className="header--title">Lofi Haven</h1>
+        <h1 style={seperatorStyle}>|</h1>
+        <p className="header--subtitle">Now Playing</p>
       </div>
-      <div className="controls">
-        <div className="time">
-          <p>
-            {currTime.min}:{currTime.sec}
-          </p>
-          {/* <p>
-            {time.min}:{time.sec}
-          </p> */}
+      <div className="overlay-container">
+        <img className="musicCover" src="/Lofi.jpg" />
+
+        <div className="timeline--container">
+          <div className="time">
+            <p>
+              {currTime.min}:{currTime.sec}
+            </p>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max={duration / 1000}
+            defaultValue="0"
+            value={seconds}
+            className="timeline"
+            onChange={(e) => {
+              sound.seek(e.target.value);
+            }}
+          />
         </div>
-        <input
-          type="range"
-          min="0"
-          max={duration / 1000}
-          default="0"
-          value={seconds}
-          className="timeline"
-          onChange={(e) => {
-            sound.seek([e.target.value]);
-          }}
-        />
         <div>
-          <button className="playButton">
-            <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
-              <BiSkipPrevious />
-            </IconContext.Provider>
-          </button>
-          {!isPlaying ? (
-            <button className="playButton" onClick={playingButton}>
-              <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
-                <AiFillPlayCircle />
-              </IconContext.Provider>
-            </button>
-          ) : (
-            <button className="playButton" onClick={playingButton}>
-              <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
-                <AiFillPauseCircle />
-              </IconContext.Provider>
-            </button>
-          )}
-          <button className="playButton">
-            <IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
-              <BiSkipNext />
-            </IconContext.Provider>
-          </button>
+          <h3 className="title">Mixed Emotions</h3>
+          <p className="subTitle">samtrax</p>
         </div>
+      </div>
+
+      <div className="controls">
+        <button className="volumeButton">
+          <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+            <FiVolume2 />
+          </IconContext.Provider>
+        </button>
+        <button className="prevButton">
+          <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+            <BiSkipPrevious />
+          </IconContext.Provider>
+        </button>
+        {!isPlaying ? (
+          <button className="playButton" onClick={playingButton}>
+            <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+              <AiFillPlayCircle />
+            </IconContext.Provider>
+          </button>
+        ) : (
+          <button className="playButton" onClick={playingButton}>
+            <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
+              <AiFillPauseCircle />
+            </IconContext.Provider>
+          </button>
+        )}
+        <button className="nextButton">
+          <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
+            <BiSkipNext />
+          </IconContext.Provider>
+        </button>
+        <button className="shuffleButton">
+          <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
+            <BiShuffle />
+          </IconContext.Provider>
+        </button>
       </div>
     </div>
   );

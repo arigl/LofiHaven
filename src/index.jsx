@@ -9,6 +9,7 @@ import { RiFullscreenFill } from "react-icons/ri";
 import { BiExitFullscreen } from "react-icons/bi";
 import { IoMdSunny } from "react-icons/io";
 import { BiWorld } from "react-icons/bi";
+import { Leva } from "leva";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -28,11 +29,11 @@ const fullSizeCanvasStyle = {
 
 const normalCanvasStyle = {
   flex: "1", // Fill its container completely
-  width: "50vw",
+  width: "65vw",
 };
 
 const normalPlayerContainerStyle = {
-  width: "50%", // Half of the viewport width
+  width: "35%", // Half of the viewport width
   height: "100%", // Adjust as needed
 };
 
@@ -57,6 +58,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
+      <Leva hidden />
       <div
         style={!isFullscreen ? normalPlayerContainerStyle : { display: "none" }}
       >
@@ -70,7 +72,7 @@ function App() {
             fov: 45,
             near: 0.1,
             far: 200,
-            position: [8, 13, 13],
+            position: [8, 8, 15],
           }}
         >
           <Experience isEnvironment={isEnvironment} isWeather={isWeather} />

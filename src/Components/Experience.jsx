@@ -5,8 +5,12 @@ import { Environment } from "@react-three/drei";
 import Rain from "./Rain";
 import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
+import { useControls } from "leva";
 
 export default function Experience(props) {
+  const { ambientIntensity } = useControls({ ambientIntensity: 1.5 });
+  const { directionalIntensity } = useControls({ directionalIntensity: 3 });
+
   console.log(props);
   return (
     <>
@@ -16,15 +20,30 @@ export default function Experience(props) {
         minDistance={10}
         maxDistance={25}
         maxPolarAngle={Math.PI / 2}
-        enablePan={false}
+        // enablePan={false}
       />
-      <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
-      <ambientLight intensity={1.5} />
+      <directionalLight
+        castShadow
+        position={[1, 2, 3]}
+        intensity={directionalIntensity}
+      />
+      <ambientLight intensity={ambientIntensity} />
       <Model />
       {/* (props.isEnvironment && <Rain />) */}
       <Rain isWeather={props.isWeather} />
       {props.isEnvironment && (
-        <Environment files="evangelion-1-HDR.hdr" background />
+        <Environment
+          files="rainforest_trail_4k.hdr"
+          background
+          near={1}
+          far={5}
+          resolution={2000}
+          // ground={{
+          //   height: 15, // Height of the camera that was used to create the env map (Default: 15)
+          //   radius: 60, // Radius of the world. (Default 60)
+          //   scale: 1000, // Scale of the backside projected sphere that holds the env texture (Default: 1000)
+          // }}
+        />
       )}
       {/* <mesh castShadow position-x={-2}>
         <sphereGeometry />

@@ -19,8 +19,50 @@ body,
   }
 }
 
+.header {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  width: 76%;
+  gap: 10px;
+  padding-left: 4%;
+  margin-bottom: 4%;
+  margin-top: 10%;
+}
+
+.header--menu--button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.header--title {
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+.header--subtitle {
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.menu--button--icon {
+  width: "30px";
+  height: "30px";
+  border-radius: 5px;
+}
+
 .musicCover {
   border-radius: 10%;
+  width: 76%;
 }
 
 .playButton {
@@ -30,41 +72,149 @@ body,
   justify-content: center;
 }
 
+.shuffleButton {
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.prevButton {
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.nextButton {
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.volumeButton {
+  background: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+}
+
 .title {
   color: white;
+  font-size: larger;
+  letter-spacing: 6px;
+  font-size: 1.5rem;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .subTitle {
   margin-top: -1em;
-  color: #4f4f4f;
+  color: #747474;
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.timeline--container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%; /* Adjust width as needed */
+  z-index: 1; /* Ensure the timeline is above the image */
+  background-color: black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.musicCover {
+  width: 100%; /* Ensure the image covers the container */
+  height: auto;
 }
 
 .time {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure the time is above the image */
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: smaller;
   margin: 0 auto;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: #828282;
-  font-size: smaller;
-}
-
-.timeline {
-  width: 100%;
-  background-color: #27ae60;
+  color: #ffffff;
+  background-color: black;
+  padding: 5px;
+  border-radius: 12px;
 }
 
 .controls {
   width: 70%;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 10%;
+}
+
+.overlay-container {
+  position: relative;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 input[type="range"] {
-  background-color: #27ae60;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
 }
 
-/* @media (max-width: 900px) {
-  .component {
-    width: 50%;
-  }
-} */
+/***** Track Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #053a5f;
+  height: 0.5rem;
+}
+
+/******** Firefox ********/
+input[type="range"]::-moz-range-track {
+  background: #053a5f;
+  height: 0.5rem;
+}
+
+/***** Thumb Styles *****/
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: 0px; /* Centers thumb on the track */
+  background-color: #5cd5eb;
+  height: 0.5rem;
+  width: 1rem;
+}
+
+/***** Firefox *****/
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+  background-color: #5cd5eb;
+  height: 2rem;
+  width: 1rem;
+}
