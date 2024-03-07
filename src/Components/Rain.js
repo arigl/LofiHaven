@@ -16,7 +16,6 @@ const Rain = (props) => {
 
   useEffect(() => {
     if (props.isWeather) {
-      console.log("test");
       const positions = [];
       const velocities = [];
 

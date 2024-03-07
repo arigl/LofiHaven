@@ -1,55 +1,124 @@
 import { useEffect, useState } from "react";
-import useSound from "use-sound"; // for handling the sound
-import qala from "/music/lofisong.mp3"; // importing the music
+//import useSound from "use-sound"; // for handling the sound
+import { Howl } from "howler";
+
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious, BiShuffle } from "react-icons/bi"; // icons for next and previous track
 import { FiVolume2 } from "react-icons/fi";
 import { IconContext } from "react-icons"; // for customizing the icons
+import musicData from "../data/musicData.js";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [play, { pause, duration, sound }] = useSound(qala);
-  const [currTime, setCurrTime] = useState({
-    min: "",
-    sec: "",
-  }); // current position of the audio in minutes and seconds
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [howl, setHowl] = useState(null);
 
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [seconds, setSeconds] = useState(); // current position of the audio in seconds
 
   useEffect(() => {
-    const sec = duration / 1000;
-    const min = Math.floor(sec / 60);
-    const secRemain = Math.floor(sec % 60);
-    const time = {
-      min: min,
-      sec: secRemain,
+    if (howl) {
+      howl.unload();
+    }
+
+    // Initialize Howler instance for the current track
+    const sound = new Howl({
+      src: [musicData[currentTrackIndex].audio],
+      autoplay: true,
+      onload: () => {
+        setDuration(sound.duration());
+      },
+      onend: nextTrack,
+      onplay: () => {
+        setIsPlaying(true);
+        requestAnimationFrame(step);
+        // console.log(isPlaying);
+        // console.log("on play");
+        // requestAnimationFrame(step);
+      },
+    });
+
+    setHowl(sound);
+
+    return () => {
+      // Cleanup the Howler instance
+      if (howl) {
+        howl.unload();
+      }
     };
-  }, []);
+  }, [currentTrackIndex]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (sound) {
-        setSeconds(sound.seek([])); // setting the seconds state with the current state
-        const min = Math.floor(sound.seek([]) / 60);
-        const sec = Math.floor(sound.seek([]) % 60);
-        setCurrTime({
-          min,
-          sec,
-        });
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [sound]);
+    let animationFrameId;
 
-  const playingButton = () => {
+    function step() {
+      if (isPlaying) {
+        setCurrentTime(howl.seek());
+        animationFrameId = requestAnimationFrame(step);
+      }
+    }
+
     if (isPlaying) {
-      pause(); // this will pause the audio
+      animationFrameId = requestAnimationFrame(step);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPlaying, howl]);
+
+  const playPause = () => {
+    if (!howl) return;
+    console.log(isPlaying);
+
+    if (isPlaying) {
       setIsPlaying(false);
+      howl.pause();
     } else {
-      play(); // this will play the audio
       setIsPlaying(true);
+      howl.play();
     }
   };
+
+  const switchTrack = (index) => {
+    if (index >= 0 && index < musicData.length) {
+      setCurrentTrackIndex(index);
+      // setIsPlaying(false); // Stop playback when switching tracks
+      if (howl) {
+        howl.unload(); // Unload the current Howl instance
+      }
+    }
+  };
+
+  const prevTrack = () => {
+    const newIndex =
+      currentTrackIndex - 1 < 0 ? musicData.length - 1 : currentTrackIndex - 1;
+    switchTrack(newIndex);
+  };
+  const nextTrack = () => {
+    const newIndex = (currentTrackIndex + 1) % musicData.length;
+    switchTrack(newIndex);
+  };
+
+  function formatTime(secs) {
+    const minutes = Math.floor(secs / 60);
+    var seconds = secs - minutes * 60 || 0;
+
+    return `${minutes}:${seconds.toFixed(0) < 10 ? "0" : ""}${seconds.toFixed(
+      0
+    )}`;
+  }
+
+  // function step() {
+  //   console.log("STEP 0");
+  //   if (isPlaying) {
+  //     console.log("STEP");
+  //     setCurrentTime(howl.seek());
+  //     requestAnimationFrame(step);
+  //   }
+  //   requestAnimationFrame(step);
+  // }
 
   const containerStyle = {
     display: "flex",
@@ -86,20 +155,19 @@ export default function Player() {
         <p className="header--subtitle">Now Playing</p>
       </div>
       <div className="overlay-container">
-        <img className="musicCover" src="/Lofi.jpg" />
+        <img className="musicCover" src={musicData[currentTrackIndex].art} />
 
         <div className="timeline--container">
           <div className="time">
-            <p>
-              {currTime.min}:{currTime.sec}
-            </p>
+            <p>{formatTime(currentTime)}</p>
+            <p>{formatTime(duration)}</p>
           </div>
           <input
             type="range"
             min="0"
-            max={duration / 1000}
+            max={duration}
             defaultValue="0"
-            value={seconds}
+            value={currentTime}
             className="timeline"
             onChange={(e) => {
               sound.seek(e.target.value);
@@ -107,8 +175,8 @@ export default function Player() {
           />
         </div>
         <div>
-          <h3 className="title">Mixed Emotions</h3>
-          <p className="subTitle">samtrax</p>
+          <h3 className="title">{musicData[currentTrackIndex].title}</h3>
+          <p className="subTitle">{musicData[currentTrackIndex].artist}</p>
         </div>
       </div>
 
@@ -118,25 +186,25 @@ export default function Player() {
             <FiVolume2 />
           </IconContext.Provider>
         </button>
-        <button className="prevButton">
+        <button className="prevButton" onClick={prevTrack}>
           <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
             <BiSkipPrevious />
           </IconContext.Provider>
         </button>
         {!isPlaying ? (
-          <button className="playButton" onClick={playingButton}>
+          <button className="playButton" onClick={playPause}>
             <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
               <AiFillPlayCircle />
             </IconContext.Provider>
           </button>
         ) : (
-          <button className="playButton" onClick={playingButton}>
+          <button className="playButton" onClick={playPause}>
             <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
               <AiFillPauseCircle />
             </IconContext.Provider>
           </button>
         )}
-        <button className="nextButton">
+        <button className="nextButton" onClick={nextTrack}>
           <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
             <BiSkipNext />
           </IconContext.Provider>
