@@ -1,6 +1,6 @@
 import "./style.css";
 import ReactDOM from "react-dom/client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Components/Experience.jsx";
 import Player from "./Components/Player.jsx";
@@ -10,6 +10,7 @@ import { BiExitFullscreen } from "react-icons/bi";
 import { IoMdSunny } from "react-icons/io";
 import { BiWorld } from "react-icons/bi";
 import { Leva } from "leva";
+import { Loader } from "@react-three/drei";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -51,6 +52,7 @@ function App() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isWeather, setWeather] = useState(true);
   const [isEnvironment, setEnvironment] = useState(false);
+  const [isLoading, setLoading] = useState(true); // State for tracking loading
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -89,8 +91,11 @@ function App() {
             position: [8, 8, 15],
           }}
         >
-          <Experience isEnvironment={isEnvironment} isWeather={isWeather} />
+          <Suspense>
+            <Experience isEnvironment={isEnvironment} isWeather={isWeather} />
+          </Suspense>
         </Canvas>
+        <Loader />
         <button
           style={{
             position: "absolute ",

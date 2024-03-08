@@ -19,6 +19,9 @@ body,
   }
 }
 
+/* 
+    HEADER
+*/
 .header {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -54,11 +57,19 @@ body,
   font-size: 0.8rem;
 }
 
+/* 
+    Menu
+*/
+
 .menu--button--icon {
   width: "30px";
   height: "30px";
   border-radius: 5px;
 }
+
+/* 
+    Controls
+*/
 
 .musicCover {
   border-radius: 10%;
@@ -137,6 +148,10 @@ body,
   height: 100%;
   object-fit: fill;
 }
+
+/* 
+    Fullscreen Controls
+*/
 
 .fs--musicCover {
   width: 50px;
@@ -264,4 +279,112 @@ input[type="range"]::-moz-range-thumb {
   background-color: #5cd5eb;
   height: 2rem;
   width: 1rem;
+}
+
+/*
+Search CSS (Playlists, songs, etc.)
+*/
+.searchMenu {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 76%;
+  height: 100%;
+  gap: 10px;
+  margin-bottom: 4%;
+  padding-left: 4%;
+}
+
+.playListHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 5%;
+  margin-top: 2%;
+}
+
+.viewPlayListButton {
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  margin: 5px;
+}
+
+.playListName {
+  padding-left: 4%;
+  font-family: "Ubuntu";
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-align: left;
+}
+.songList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.songListing {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: white;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding-left: 4%;
+  margin-right: 4%;
+}
+
+.searchAlbumArt {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.searchArtistDesc {
+  display: flex;
+  flex-direction: column;
+}
+.searchTitle {
+  color: white;
+  font-size: larger;
+  font-size: 1.2rem;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.searchSubtitle {
+  margin-top: -1em;
+  color: #747474;
+  font-family: "Ubuntu";
+  font-weight: 300;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.searchHeaderTitle {
+  padding-left: 4%;
+  font-family: "Ubuntu";
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-align: left;
+}
+
+.playListView {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.playlistListing {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: white;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding-left: 4%;
+  margin-right: 4%;
+  padding: 5%;
 }

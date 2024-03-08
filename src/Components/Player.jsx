@@ -7,9 +7,11 @@ import { BiSkipNext, BiSkipPrevious, BiShuffle } from "react-icons/bi"; // icons
 import { FiVolume2 } from "react-icons/fi";
 import { IconContext } from "react-icons"; // for customizing the icons
 import musicData from "../data/musicData.js";
+import Search from "./Menus/Search.jsx";
 
 export default function Player(props) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [howl, setHowl] = useState(null);
 
@@ -17,7 +19,10 @@ export default function Player(props) {
   const [currentTime, setCurrentTime] = useState(0);
 
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.3);
+
+  const [playList, setPlayList] = useState(musicData.chillMix);
+  const [playListSongs, setPlayListSongs] = useState(musicData.chillMix.songs);
 
   useEffect(() => {
     if (howl) {
@@ -26,7 +31,7 @@ export default function Player(props) {
 
     // Initialize Howler instance for the current track
     const sound = new Howl({
-      src: [musicData[currentTrackIndex].audio],
+      src: [playListSongs[currentTrackIndex].audio],
       autoplay: true,
       volume: volume,
       onload: () => {
@@ -35,7 +40,7 @@ export default function Player(props) {
       onend: nextTrack,
       onplay: () => {
         setIsPlaying(true);
-        requestAnimationFrame(step);
+        //requestAnimationFrame(step);
         // console.log(isPlaying);
         // console.log("on play");
         // requestAnimationFrame(step);
@@ -50,7 +55,7 @@ export default function Player(props) {
         howl.unload();
       }
     };
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, playList]);
 
   useEffect(() => {
     let animationFrameId;
@@ -85,7 +90,7 @@ export default function Player(props) {
   };
 
   const switchTrack = (index) => {
-    if (index >= 0 && index < musicData.length) {
+    if (index >= 0 && index < playListSongs.length) {
       setCurrentTrackIndex(index);
       // setIsPlaying(false); // Stop playback when switching tracks
       if (howl) {
@@ -95,17 +100,19 @@ export default function Player(props) {
   };
 
   const shuffleButton = () => {
-    const randomIndex = Math.floor(Math.random() * musicData.length);
+    const randomIndex = Math.floor(Math.random() * playListSongs.length);
     switchTrack(randomIndex);
   };
 
   const prevTrack = () => {
     const newIndex =
-      currentTrackIndex - 1 < 0 ? musicData.length - 1 : currentTrackIndex - 1;
+      currentTrackIndex - 1 < 0
+        ? playListSongs.length - 1
+        : currentTrackIndex - 1;
     switchTrack(newIndex);
   };
   const nextTrack = () => {
-    const newIndex = (currentTrackIndex + 1) % musicData.length;
+    const newIndex = (currentTrackIndex + 1) % playListSongs.length;
     switchTrack(newIndex);
   };
 
@@ -120,6 +127,27 @@ export default function Player(props) {
 
   const toggleVolumeSlider = () => {
     setShowVolumeSlider((prevState) => !prevState);
+  };
+
+  const toggleSearch = () => {
+    console.log("Search");
+    setIsSearching((prevState) => !prevState);
+  };
+
+  const handleTrackClick = (index, playList) => {
+    console.log(index);
+    console.log(playList);
+    setPlayList(playList);
+    setPlayListSongs(playList.songs);
+    setCurrentTrackIndex(index);
+    switchTrack(index);
+    setIsSearching(false); // Close the search menu after selecting a song
+  };
+
+  const handlePlayListClick = (playlist, index) => {
+    setPlayList(playlist);
+    setCurrentTrackIndex(index);
+    setIsSearching(false); // Close the search menu after selecting a song
   };
 
   const handleVolumeChange = (e) => {
@@ -154,7 +182,7 @@ export default function Player(props) {
       {/* <h2>Playing Now</h2> */}
       {!props.isFullscreen && (
         <div className="header">
-          <button className="header--menu--button">
+          <button className="header--menu--button" onClick={toggleSearch}>
             <img
               className="menu--button--icon"
               src="/Menu.png"
@@ -164,143 +192,190 @@ export default function Player(props) {
           <h1 className="header--title">Lofi Haven</h1>
           <h1 style={seperatorStyle}>|</h1>
           <p className="header--subtitle">Now Playing</p>
+          <p className="header--subtitle">{playList.playListTitle}</p>
         </div>
       )}
-      <div className="overlay-container">
-        {!props.isFullscreen && (
-          <img className="musicCover" src={musicData[currentTrackIndex].art} />
-        )}
-        {!props.isFullscreen && (
-          <div className="timeline--container">
-            <div className="time">
-              <p>{formatTime(currentTime)}</p>
-              <p>{formatTime(duration)}</p>
-            </div>
-            <input
-              type="range"
-              min="0"
-              max={duration}
-              defaultValue="0"
-              value={currentTime}
-              className="timeline"
-              onChange={(e) => {
-                if (howl) {
-                  howl.seek(e.target.value);
-                }
-              }}
-            />
-          </div>
-        )}
+      {isSearching && (
+        <Search
+          currentTrackIndex={currentTrackIndex}
+          setCurrentTrackIndex={handleTrackClick}
+          playList={playList}
+          playListSongs={playListSongs}
+          setPlayList={handlePlayListClick}
+        />
+      )}
+      {!isSearching && (
+        <div className="component" style={containerStyle}>
+          <div className="overlay-container">
+            {!props.isFullscreen && (
+              <img
+                className="musicCover"
+                src={playListSongs[currentTrackIndex].art}
+              />
+            )}
+            {!props.isFullscreen && (
+              <div className="timeline--container">
+                <div className="time">
+                  <p>{formatTime(currentTime)}</p>
+                  <p>{formatTime(duration)}</p>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration}
+                  defaultValue="0"
+                  value={currentTime}
+                  className="timeline"
+                  onChange={(e) => {
+                    if (howl) {
+                      howl.seek(e.target.value);
+                    }
+                  }}
+                />
+              </div>
+            )}
 
-        {!props.isFullscreen && (
-          <div>
-            <h3 className="title">{musicData[currentTrackIndex].title}</h3>
-            <p className="subTitle">{musicData[currentTrackIndex].artist}</p>
+            {!props.isFullscreen && (
+              <div>
+                <h3 className="title">
+                  {playListSongs[currentTrackIndex].title}
+                </h3>
+                <p className="subTitle">
+                  {playListSongs[currentTrackIndex].artist}
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      {!props.isFullscreen && (
-        <div className="controls">
-          <button className="volumeButton" onClick={toggleVolumeSlider}>
-            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-              <FiVolume2 />
-            </IconContext.Provider>
-          </button>
-          {showVolumeSlider && (
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-            />
+          {!props.isFullscreen && (
+            <div className="controls">
+              <button className="volumeButton" onClick={toggleVolumeSlider}>
+                <IconContext.Provider
+                  value={{ size: "2.0em", color: "#ffffff" }}
+                >
+                  <FiVolume2 />
+                </IconContext.Provider>
+              </button>
+              {showVolumeSlider && (
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                />
+              )}
+              <button className="prevButton" onClick={prevTrack}>
+                <IconContext.Provider
+                  value={{ size: "2.5em", color: "#ffffff" }}
+                >
+                  <BiSkipPrevious />
+                </IconContext.Provider>
+              </button>
+              {!isPlaying ? (
+                <button className="playButton" onClick={playPause}>
+                  <IconContext.Provider
+                    value={{ size: "3.5em", color: "#ffffff" }}
+                  >
+                    <AiFillPlayCircle />
+                  </IconContext.Provider>
+                </button>
+              ) : (
+                <button className="playButton" onClick={playPause}>
+                  <IconContext.Provider
+                    value={{ size: "3.5em", color: "#ffffff" }}
+                  >
+                    <AiFillPauseCircle />
+                  </IconContext.Provider>
+                </button>
+              )}
+              <button className="nextButton" onClick={nextTrack}>
+                <IconContext.Provider
+                  value={{ size: "2.5em", color: "#ffffff" }}
+                >
+                  <BiSkipNext />
+                </IconContext.Provider>
+              </button>
+              <button className="shuffleButton" onClick={shuffleButton}>
+                <IconContext.Provider
+                  value={{ size: "2.0em", color: "#ffffff" }}
+                >
+                  <BiShuffle />
+                </IconContext.Provider>
+              </button>
+            </div>
           )}
-          <button className="prevButton" onClick={prevTrack}>
-            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-              <BiSkipPrevious />
-            </IconContext.Provider>
-          </button>
-          {!isPlaying ? (
-            <button className="playButton" onClick={playPause}>
-              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-                <AiFillPlayCircle />
-              </IconContext.Provider>
-            </button>
-          ) : (
-            <button className="playButton" onClick={playPause}>
-              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-                <AiFillPauseCircle />
-              </IconContext.Provider>
-            </button>
+          {props.isFullscreen && (
+            <div className="fs--controls">
+              <img
+                className="fs--musicCover"
+                src={playListSongs[currentTrackIndex].art}
+              />
+              <div className="fs--details">
+                <h3 className="fs--title">
+                  {playListSongs[currentTrackIndex].title}
+                </h3>
+                <p className="fs--subTitle">
+                  {playListSongs[currentTrackIndex].artist}
+                </p>
+              </div>
+              <button className="volumeButton" onClick={toggleVolumeSlider}>
+                <IconContext.Provider
+                  value={{ size: "2.0em", color: "#ffffff" }}
+                >
+                  <FiVolume2 />
+                </IconContext.Provider>
+              </button>
+              {showVolumeSlider && (
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                />
+              )}
+              <button className="prevButton" onClick={prevTrack}>
+                <IconContext.Provider
+                  value={{ size: "2.5em", color: "#ffffff" }}
+                >
+                  <BiSkipPrevious />
+                </IconContext.Provider>
+              </button>
+              {!isPlaying ? (
+                <button className="playButton" onClick={playPause}>
+                  <IconContext.Provider
+                    value={{ size: "3.5em", color: "#ffffff" }}
+                  >
+                    <AiFillPlayCircle />
+                  </IconContext.Provider>
+                </button>
+              ) : (
+                <button className="playButton" onClick={playPause}>
+                  <IconContext.Provider
+                    value={{ size: "3.5em", color: "#ffffff" }}
+                  >
+                    <AiFillPauseCircle />
+                  </IconContext.Provider>
+                </button>
+              )}
+              <button className="nextButton" onClick={nextTrack}>
+                <IconContext.Provider
+                  value={{ size: "2.5em", color: "#ffffff" }}
+                >
+                  <BiSkipNext />
+                </IconContext.Provider>
+              </button>
+              <button className="shuffleButton" onClick={shuffleButton}>
+                <IconContext.Provider
+                  value={{ size: "2.0em", color: "#ffffff" }}
+                >
+                  <BiShuffle />
+                </IconContext.Provider>
+              </button>
+            </div>
           )}
-          <button className="nextButton" onClick={nextTrack}>
-            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-              <BiSkipNext />
-            </IconContext.Provider>
-          </button>
-          <button className="shuffleButton" onClick={shuffleButton}>
-            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-              <BiShuffle />
-            </IconContext.Provider>
-          </button>
-        </div>
-      )}
-      {props.isFullscreen && (
-        <div className="fs--controls">
-          <img
-            className="fs--musicCover"
-            src={musicData[currentTrackIndex].art}
-          />
-          <div className="fs--details">
-            <h3 className="fs--title">{musicData[currentTrackIndex].title}</h3>
-            <p className="fs--subTitle">
-              {musicData[currentTrackIndex].artist}
-            </p>
-          </div>
-          <button className="volumeButton" onClick={toggleVolumeSlider}>
-            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-              <FiVolume2 />
-            </IconContext.Provider>
-          </button>
-          {showVolumeSlider && (
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-            />
-          )}
-          <button className="prevButton" onClick={prevTrack}>
-            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-              <BiSkipPrevious />
-            </IconContext.Provider>
-          </button>
-          {!isPlaying ? (
-            <button className="playButton" onClick={playPause}>
-              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-                <AiFillPlayCircle />
-              </IconContext.Provider>
-            </button>
-          ) : (
-            <button className="playButton" onClick={playPause}>
-              <IconContext.Provider value={{ size: "3.5em", color: "#ffffff" }}>
-                <AiFillPauseCircle />
-              </IconContext.Provider>
-            </button>
-          )}
-          <button className="nextButton" onClick={nextTrack}>
-            <IconContext.Provider value={{ size: "2.5em", color: "#ffffff" }}>
-              <BiSkipNext />
-            </IconContext.Provider>
-          </button>
-          <button className="shuffleButton" onClick={shuffleButton}>
-            <IconContext.Provider value={{ size: "2.0em", color: "#ffffff" }}>
-              <BiShuffle />
-            </IconContext.Provider>
-          </button>
         </div>
       )}
     </div>
