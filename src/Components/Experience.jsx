@@ -1,12 +1,14 @@
 import { OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Model } from "./Model";
+import { GameRoom } from "./GameRoom";
 import { Environment } from "@react-three/drei";
 import { StringLights } from "./Lights/StringLights";
 import Rain from "./Rain";
 import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
 import { useControls } from "leva";
+import musicData from "../data/musicData";
 
 export default function Experience(props) {
   const { ambientIntensity } = useControls({ ambientIntensity: 1.5 });
@@ -28,7 +30,9 @@ export default function Experience(props) {
         intensity={directionalIntensity}
       />
       <ambientLight intensity={ambientIntensity} />
-      <Model />
+      {props.currentPlaylist === musicData.chillMix && <Model />}
+      {props.currentPlaylist === musicData.gamingMix && <GameRoom />}
+
       <StringLights />
       {/* (props.isEnvironment && <Rain />) */}
       <Rain isWeather={props.isWeather} />

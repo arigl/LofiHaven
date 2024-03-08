@@ -11,6 +11,7 @@ import { IoMdSunny } from "react-icons/io";
 import { BiWorld } from "react-icons/bi";
 import { Leva } from "leva";
 import { Loader } from "@react-three/drei";
+import musicData from "./data/musicData.js";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -54,6 +55,8 @@ function App() {
   const [isEnvironment, setEnvironment] = useState(false);
   const [isLoading, setLoading] = useState(true); // State for tracking loading
 
+  const [playList, setPlayList] = useState(musicData.chillMix);
+
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
@@ -68,6 +71,10 @@ function App() {
     setEnvironment(!isEnvironment);
   };
 
+  const handlePlayListChange = (playlist) => {
+    setPlayList(playlist);
+  };
+
   return (
     <div style={containerStyle}>
       <Leva hidden />
@@ -78,7 +85,13 @@ function App() {
             : fullscreenPlayerContainerStyle
         }
       >
-        {<Player isFullscreen={isFullscreen} />}
+        {
+          <Player
+            isFullscreen={isFullscreen}
+            currentPlaylist={playList}
+            setPlayList={handlePlayListChange}
+          />
+        }
       </div>
       <div style={isFullscreen ? fullSizeCanvasStyle : normalCanvasStyle}>
         <Canvas
@@ -92,7 +105,11 @@ function App() {
           }}
         >
           <Suspense>
-            <Experience isEnvironment={isEnvironment} isWeather={isWeather} />
+            <Experience
+              isEnvironment={isEnvironment}
+              isWeather={isWeather}
+              currentPlaylist={playList}
+            />
           </Suspense>
         </Canvas>
         <Loader />

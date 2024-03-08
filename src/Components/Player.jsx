@@ -138,6 +138,7 @@ export default function Player(props) {
     console.log(index);
     console.log(playList);
     setPlayList(playList);
+    props.setPlayList(playList);
     setPlayListSongs(playList.songs);
     setCurrentTrackIndex(index);
     switchTrack(index);
