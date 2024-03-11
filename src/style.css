@@ -76,11 +76,19 @@ body,
   width: 76%;
 }
 
+.controlButtons:hover {
+  fill: #0575c5;
+}
+
 .playButton {
   background: none;
   border: none;
   align-items: center;
   justify-content: center;
+}
+
+.playButton:hover {
+  color: black;
 }
 
 .shuffleButton {
@@ -109,6 +117,13 @@ body,
   border: none;
   align-items: center;
   justify-content: center;
+}
+.volumeButtonIcon {
+  fill: white
+}
+.volumeButtonIcon:hover {
+  fill: #0575c5;
+  stroke: #0575c5;
 }
 
 .title {
@@ -217,7 +232,7 @@ body,
 .fs--controls {
   width: 70%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4%;
@@ -225,6 +240,14 @@ body,
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 10%;
+}
+
+.fs--controls--main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4%;
 }
 
 .overlay-container {
@@ -298,6 +321,42 @@ Search CSS (Playlists, songs, etc.)
   padding-left: 4%;
 }
 
+.searchHeader {
+  font-family: "Ubuntu";
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.playlistListing {
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: space-between;
+}
+
+.playlistButton {
+  border-radius: 5px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 2px;
+  border: none;
+}
+
+.playlistButton:hover {
+  background-color: rgb(68, 68, 68);
+}
+
+.playlistButtonText{
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .playListHeader {
   display: flex;
   flex-direction: row;
@@ -311,6 +370,11 @@ Search CSS (Playlists, songs, etc.)
   background-color: rgba(0, 0, 0, 0.2);
   color: white;
   margin: 5px;
+  border: none;
+}
+
+.viewPlayListButton:hover {
+  background-color: rgb(60, 60, 60);
 }
 
 .playListName {
@@ -334,6 +398,27 @@ Search CSS (Playlists, songs, etc.)
   background-color: rgba(0, 0, 0, 0.2);
   padding-left: 4%;
   margin-right: 4%;
+  justify-content: space-between;
+}
+
+.songButton {
+  display: flex;
+  margin-right: 1rem;
+  border: none;
+  align-items: center;
+  padding: 8px;
+  border-radius: 2px;
+}
+
+.songButton:hover {
+  background-color: rgb(119, 119, 119);
+}
+
+.songListingDesc {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
 .searchAlbumArt {
@@ -421,13 +506,13 @@ Search CSS (Playlists, songs, etc.)
 
 *::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background-color: #0b0a21;
+  background-color: #1b1b1e;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #15184b;
+  background-color: #2b2b36;
 }
 
 *::-webkit-scrollbar-thumb:active {
-  background-color: #110a69;
+  background-color: #2b2b36;
 }
