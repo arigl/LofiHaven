@@ -12,6 +12,7 @@ import { BiWorld } from "react-icons/bi";
 import { Leva } from "leva";
 import { Loader } from "@react-three/drei";
 import musicData from "./data/musicData.js";
+import { Analytics } from "@vercel/analytics/react";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -78,6 +79,7 @@ function App() {
   return (
     <div style={containerStyle}>
       <Leva hidden />
+      <Analytics />
       <div
         style={
           !isFullscreen
