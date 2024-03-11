@@ -32,7 +32,7 @@ export default function Experience(props) {
       <ambientLight intensity={ambientIntensity} />
       {props.currentPlaylist === musicData.chillMix && <Model />}
       {props.currentPlaylist === musicData.gamingMix && <GameRoom />}
-
+      {props.currentPlaylist === musicData.jazzMix && <Model />}
       <StringLights />
       {/* (props.isEnvironment && <Rain />) */}
       <Rain isWeather={props.isWeather} />

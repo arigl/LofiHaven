@@ -6,9 +6,91 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export function GameRoom(props) {
-  const { nodes, materials } = useGLTF("/GamingRoom4.glb");
+  const { nodes, materials } = useGLTF("/Gaming.glb");
   return (
     <group {...props} dispose={null}>
+      <group
+        position={[2.537, -0.05, -3.478]}
+        rotation={[0, -0.231, 0]}
+        scale={2.064}
+      >
+        <skinnedMesh
+          geometry={nodes.Circle011.geometry}
+          material={materials["white.001"]}
+          skeleton={nodes.Circle011.skeleton}
+        />
+        <skinnedMesh
+          geometry={nodes.Circle012.geometry}
+          material={materials["white.001"]}
+          skeleton={nodes.Circle012.skeleton}
+        />
+        <primitive object={nodes.spine} />
+        <skinnedMesh
+          geometry={nodes.Circle015.geometry}
+          material={materials["black.002"]}
+          skeleton={nodes.Circle015.skeleton}
+        />
+        <skinnedMesh
+          geometry={nodes.Circle015_1.geometry}
+          material={materials["white.001"]}
+          skeleton={nodes.Circle015_1.skeleton}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Plane043.geometry}
+        material={materials.Metal}
+        position={[-2.277, 1.844, -1.428]}
+        rotation={[1.341, 1.526, -1.34]}
+      >
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane001.geometry}
+          material={materials["Black.003"]}
+          position={[0.105, 0.011, -0.039]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Plane044.geometry}
+          material={materials["Metal.001"]}
+        />
+      </mesh>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Plane003.geometry}
+        material={materials.Bg}
+        position={[-3.297, 1.819, -1.511]}
+        rotation={[0, -0.028, 0]}
+        scale={[0.224, 0.151, 0.244]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Plane006.geometry}
+        material={materials["metal.001"]}
+        position={[-3.619, 1.981, -1.512]}
+        rotation={[0, -0.005, 0]}
+        scale={0.3}
+      >
+        <group position={[0.927, 3.036, 0]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane018.geometry}
+            material={materials["metal.001"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Plane018_1.geometry}
+            material={materials.screen}
+          />
+        </group>
+      </mesh>
       <mesh
         castShadow
         receiveShadow
@@ -91,205 +173,6 @@ export function GameRoom(props) {
         geometry={nodes.Pipe.geometry}
         material={materials.metal}
         position={[-3.91, 0, 1.859]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.PC001.geometry}
-        material={materials["computer-beige"]}
-        position={[7.67, -0.335, -3.082]}
-        rotation={[0, 0.005, 0]}
-        scale={1.253}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane009.geometry}
-          material={materials["computer-beige"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane010.geometry}
-          material={materials.black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane011.geometry}
-          material={materials.red}
-          position={[0.419, 0.197, 0.442]}
-          rotation={[-0.157, 0, 0]}
-        />
-        <group position={[-0.466, 0.116, 0.445]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_1.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_2.geometry}
-            material={materials.led}
-          />
-        </group>
-        <group position={[-0.424, 0.116, 0.445]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_1.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_2.geometry}
-            material={materials.led}
-          />
-        </group>
-        <group position={[0.05, 0.317, 0.06]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane011_1.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane011_2.geometry}
-            material={materials["screen-qb"]}
-          />
-        </group>
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Keyboard001.geometry}
-        material={materials["computer-beige"]}
-        position={[6.674, -1.479, -1.724]}
-        rotation={[0, 0.633, 0]}
-        scale={1.253}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane018.geometry}
-          material={materials.grey}
-          position={[-0.04, 0.047, 0.028]}
-          rotation={[0.084, 0, 0]}
-        />
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.TV.geometry}
-        material={materials.black}
-        position={[5.743, 1.818, -3.282]}
-        rotation={[0, -0.244, 0]}
-        scale={1.217}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane019.geometry}
-          material={materials.black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane020.geometry}
-          material={materials.grey}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane021.geometry}
-          material={materials.led}
-          position={[0.52, 0.095, 0.311]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane022.geometry}
-          material={materials.grey}
-          position={[0.154, 0.656, 0.02]}
-          rotation={[0, 0.088, 0]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane024.geometry}
-            material={materials.black}
-            position={[-0.205, 0.161, 0.287]}
-            rotation={[1.402, 0, 0]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane025.geometry}
-            material={materials.black}
-            position={[0, 0, -0.075]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane026.geometry}
-            material={materials.black}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane027.geometry}
-            material={materials.led}
-            position={[0.416, 0.033, 0.314]}
-            rotation={[Math.PI / 2, 0, 0]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane045_1.geometry}
-            material={materials.grey}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane045_2.geometry}
-            material={materials.led}
-          />
-        </mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane040_1.geometry}
-          material={materials["black-gloss"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane040_2.geometry}
-          material={materials["screen-dos-game"]}
-        />
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.VHS.geometry}
-        material={materials.black}
-        position={[5.881, 0.72, -2.575]}
-        rotation={[0, -0.813, 0]}
-        scale={1.217}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.VHS001.geometry}
-        material={materials.black}
-        position={[5.881, 0.79, -2.575]}
-        rotation={[0, -0.623, 0]}
-        scale={1.217}
       />
       <group position={[-2.822, 0, 2.81]} scale={1.134}>
         <mesh
@@ -380,174 +263,6 @@ export function GameRoom(props) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.PC002.geometry}
-        material={materials["computer-beige"]}
-        position={[8.06, 0.779, -5.453]}
-        rotation={[0, 0.924, 0]}
-        scale={1.253}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane035.geometry}
-          material={materials["computer-beige"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane036.geometry}
-          material={materials.black}
-          position={[0, 0, -0.095]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane037.geometry}
-          material={materials.red}
-          position={[0.419, 0.197, 0.442]}
-          rotation={[-0.157, 0, 0]}
-        />
-        <group position={[-0.466, 0.116, 0.445]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_1.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_2.geometry}
-            material={materials.led}
-          />
-        </group>
-        <group position={[-0.424, 0.116, 0.445]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_1.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane010_2.geometry}
-            material={materials.led}
-          />
-        </group>
-        <group position={[0.016, 0.317, 0.06]} scale={1.241}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane016.geometry}
-            material={materials["computer-beige"]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane016_1.geometry}
-            material={materials["screen-nc"]}
-          />
-        </group>
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Mouse.geometry}
-        material={materials["computer-beige"]}
-        position={[9.41, 1.818, -2.438]}
-        scale={1.154}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cable001.geometry}
-        material={materials["computer-beige"]}
-        position={[7.665, -1.483, -2.354]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cable002.geometry}
-        material={materials["computer-beige"]}
-        position={[6.555, -1.442, -1.943]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cable003.geometry}
-        material={nodes.Cable003.material}
-        position={[6.785, 2.76, -3.514]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Keyboard.geometry}
-        material={materials["computer-beige"]}
-        position={[5.266, 2.587, -3.884]}
-        rotation={[1.421, -1.571, 0]}
-        scale={1.253}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane043.geometry}
-          material={materials.grey}
-          position={[-0.04, 0.047, 0.028]}
-          rotation={[0.084, 0, 0]}
-        />
-      </mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cable004.geometry}
-        material={materials["black-gloss"]}
-        position={[4.79, 2.661, -3.859]}
-      />
-      <group position={[-3.082, 1.818, -0.236]} rotation={[0, 0.114, 0]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane054_1.geometry}
-          material={materials["computer-beige"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane054_2.geometry}
-          material={materials["screen-dos"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane045.geometry}
-          material={materials.grey}
-          position={[0.461, 0.221, 0.052]}
-          rotation={[Math.PI / 2, 1.353, -Math.PI / 2]}
-          scale={1.253}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane056_1.geometry}
-          material={materials.black}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane056_2.geometry}
-          material={materials["computer-beige"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane056_3.geometry}
-          material={materials.grey}
-        />
-      </group>
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Chair.geometry}
         material={materials.metal}
         position={[-1.325, 0.284, -1.448]}
@@ -601,8 +316,8 @@ export function GameRoom(props) {
         />
       </group>
       <group
-        position={[0.47, 3.711, -4.007]}
-        rotation={[0, 0, 0.067]}
+        position={[0.355, 3.77, -4.007]}
+        rotation={[0, 0, -0.077]}
         scale={0.845}
       >
         <mesh
@@ -625,49 +340,6 @@ export function GameRoom(props) {
         material={materials.wood}
         position={[-4, 3.906, -1.647]}
       />
-      <group position={[5.478, 1.817, -2.661]} rotation={[0, 0.41, 0]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane061_1.geometry}
-          material={materials.red}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane061_2.geometry}
-          material={materials["black-gloss"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Plane052.geometry}
-          material={materials["black-gloss"]}
-          position={[-0.051, 0.051, 0.082]}
-          rotation={[-0.163, 0, 0]}
-        />
-        <group position={[-0.137, 0.061, 0.279]} rotation={[0, 1.02, 1.713]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane063_1.geometry}
-            material={materials.red}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Plane063_2.geometry}
-            material={materials.metal}
-          />
-        </group>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Vert009.geometry}
-          material={materials["black-gloss"]}
-          position={[0.159, 0.028, 0.085]}
-        />
-      </group>
       <mesh
         castShadow
         receiveShadow
@@ -738,24 +410,6 @@ export function GameRoom(props) {
         material={materials.white}
         position={[3.213, 1.011, 0.498]}
         rotation={[0, -0.875, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Paper004.geometry}
-        material={materials.white}
-        position={[-3.991, 3.929, 0.88]}
-        rotation={[0.066, 0, -Math.PI / 2]}
-        scale={1.914}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Paper.geometry}
-        material={materials.white}
-        position={[-3.983, 3.414, 0.368]}
-        rotation={[-0.104, 0, -Math.PI / 2]}
-        scale={1.245}
       />
       <mesh
         castShadow
@@ -847,17 +501,7 @@ export function GameRoom(props) {
           position={[0, 1.304, 0.476]}
           rotation={[-0.445, 0, 0]}
           scale={1.123}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Icosphere.geometry}
-            material={nodes.Icosphere.material}
-            position={[0, -0.106, 0]}
-            rotation={[0.445, -1.048, 0]}
-            scale={0.891}
-          />
-        </mesh>
+        />
         <mesh
           castShadow
           receiveShadow
@@ -871,8 +515,8 @@ export function GameRoom(props) {
         receiveShadow
         geometry={nodes.Cube002.geometry}
         material={materials["black-gloss"]}
-        position={[-0.038, -3.483, -0.035]}
-        scale={[0.82, 1, 0.85]}
+        position={[-0.038, -5.451, -0.035]}
+        scale={[0.82, 1.55, 0.85]}
       />
       <group position={[-3.721, 4.303, -0.888]} rotation={[1.421, -1.571, 0]}>
         <mesh
@@ -1137,4 +781,4 @@ export function GameRoom(props) {
   );
 }
 
-useGLTF.preload("/GamingRoom4.glb");
+useGLTF.preload("/Gaming.glb");

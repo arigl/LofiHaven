@@ -119,7 +119,7 @@ body,
   justify-content: center;
 }
 .volumeButtonIcon {
-  fill: white
+  fill: white;
 }
 .volumeButtonIcon:hover {
   fill: #0575c5;
@@ -351,7 +351,7 @@ Search CSS (Playlists, songs, etc.)
   background-color: rgb(68, 68, 68);
 }
 
-.playlistButtonText{
+.playlistButtonText {
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
