@@ -41,6 +41,12 @@ export default function Search(props) {
                 Select
               </button>
             </div>
+            <div className="playlistListing">
+              {musicData.jazzMix.playListTitle}
+              <button onClick={() => handlePlayListClick(musicData.jazzMix)}>
+                Select
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -53,7 +59,10 @@ export default function Search(props) {
             </button>
           </div>
 
-          <div className="songList">
+          <div
+            className="songList"
+            style={{ maxHeight: "90%", overflowY: "auto" }}
+          >
             {playListSongs.map((music, index) => (
               <div className="songListing" key={music.title}>
                 <img
