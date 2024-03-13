@@ -8,6 +8,7 @@ import { FiVolume2 } from "react-icons/fi";
 import { IconContext } from "react-icons"; // for customizing the icons
 import musicData from "../data/musicData.js";
 import Search from "./Menus/Search.jsx";
+import Timer from "./Tools/Timer.jsx";
 
 export default function Player(props) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -251,7 +252,11 @@ export default function Player(props) {
             <div className="controls">
               <button className="volumeButton" onClick={toggleVolumeSlider}>
                 <IconContext.Provider
-                  value={{ size: "2.0em", color: "#ffffff", className: "volumeButtonIcon" }}
+                  value={{
+                    size: "2.0em",
+                    color: "#ffffff",
+                    className: "volumeButtonIcon",
+                  }}
                 >
                   <FiVolume2 />
                 </IconContext.Provider>
@@ -268,7 +273,11 @@ export default function Player(props) {
               )}
               <button className="prevButton" onClick={prevTrack}>
                 <IconContext.Provider
-                  value={{ size: "2.5em", color: "#ffffff", className: "controlButtons" }}
+                  value={{
+                    size: "2.5em",
+                    color: "#ffffff",
+                    className: "controlButtons",
+                  }}
                 >
                   <BiSkipPrevious />
                 </IconContext.Provider>
@@ -276,7 +285,11 @@ export default function Player(props) {
               {!isPlaying ? (
                 <button className="playButton" onClick={playPause}>
                   <IconContext.Provider
-                    value={{ size: "3.5em", color: "#ffffff", className: "controlButtons"  }}
+                    value={{
+                      size: "3.5em",
+                      color: "#ffffff",
+                      className: "controlButtons",
+                    }}
                   >
                     <AiFillPlayCircle />
                   </IconContext.Provider>
@@ -284,7 +297,11 @@ export default function Player(props) {
               ) : (
                 <button className="playButton" onClick={playPause}>
                   <IconContext.Provider
-                    value={{ size: "3.5em", color: "#ffffff", className: "controlButtons"  }}
+                    value={{
+                      size: "3.5em",
+                      color: "#ffffff",
+                      className: "controlButtons",
+                    }}
                   >
                     <AiFillPauseCircle />
                   </IconContext.Provider>
@@ -292,14 +309,22 @@ export default function Player(props) {
               )}
               <button className="nextButton" onClick={nextTrack}>
                 <IconContext.Provider
-                  value={{ size: "2.5em", color: "#ffffff", className: "controlButtons" }}
+                  value={{
+                    size: "2.5em",
+                    color: "#ffffff",
+                    className: "controlButtons",
+                  }}
                 >
                   <BiSkipNext />
                 </IconContext.Provider>
               </button>
               <button className="shuffleButton" onClick={shuffleButton}>
                 <IconContext.Provider
-                  value={{ size: "2.0em", color: "#ffffff", className: "controlButtons" }}
+                  value={{
+                    size: "2.0em",
+                    color: "#ffffff",
+                    className: "controlButtons",
+                  }}
                 >
                   <BiShuffle />
                 </IconContext.Provider>
@@ -308,65 +333,89 @@ export default function Player(props) {
           )}
           {props.isFullscreen && (
             <div className="fs--controls">
-              <div className="fs--controls--main"> 
-              <img
-                className="fs--musicCover"
-                src={playListSongs[currentTrackIndex].art}
-              />
-              <div className="fs--details">
-                <h3 className="fs--title">
-                  {playListSongs[currentTrackIndex].title}
-                </h3>
-                <p className="fs--subTitle">
-                  {playListSongs[currentTrackIndex].artist}
-                </p>
-              </div>
-              <button className="volumeButton" onClick={toggleVolumeSlider}>
-                <IconContext.Provider
-                  value={{ size: "2.0em", color: "#ffffff" , className: "volumeButtonIcon" }}
-                >
-                  <FiVolume2 />
-                </IconContext.Provider>
-              </button>
-              
-              <button className="prevButton" onClick={prevTrack}>
-                <IconContext.Provider
-                  value={{ size: "2.5em", color: "#ffffff" , className: "controlButtons" }}
-                >
-                  <BiSkipPrevious />
-                </IconContext.Provider>
-              </button>
-              {!isPlaying ? (
-                <button className="playButton" onClick={playPause}>
+              <div className="fs--controls--main">
+                <img
+                  className="fs--musicCover"
+                  src={playListSongs[currentTrackIndex].art}
+                />
+                <div className="fs--details">
+                  <h3 className="fs--title">
+                    {playListSongs[currentTrackIndex].title}
+                  </h3>
+                  <p className="fs--subTitle">
+                    {playListSongs[currentTrackIndex].artist}
+                  </p>
+                </div>
+                <button className="volumeButton" onClick={toggleVolumeSlider}>
                   <IconContext.Provider
-                    value={{ size: "3.5em", color: "#ffffff" , className: "controlButtons" }}
+                    value={{
+                      size: "2.0em",
+                      color: "#ffffff",
+                      className: "volumeButtonIcon",
+                    }}
                   >
-                    <AiFillPlayCircle />
+                    <FiVolume2 />
                   </IconContext.Provider>
                 </button>
-              ) : (
-                <button className="playButton" onClick={playPause}>
+
+                <button className="prevButton" onClick={prevTrack}>
                   <IconContext.Provider
-                    value={{ size: "3.5em", color: "#ffffff" , className: "controlButtons" }}
+                    value={{
+                      size: "2.5em",
+                      color: "#ffffff",
+                      className: "controlButtons",
+                    }}
                   >
-                    <AiFillPauseCircle />
+                    <BiSkipPrevious />
                   </IconContext.Provider>
                 </button>
-              )}
-              <button className="nextButton" onClick={nextTrack}>
-                <IconContext.Provider
-                  value={{ size: "2.5em", color: "#ffffff" , className: "controlButtons" }}
-                >
-                  <BiSkipNext />
-                </IconContext.Provider>
-              </button>
-              <button className="shuffleButton" onClick={shuffleButton}>
-                <IconContext.Provider
-                  value={{ size: "2.0em", color: "#ffffff" , className: "controlButtons" }}
-                >
-                  <BiShuffle />
-                </IconContext.Provider>
-              </button>
+                {!isPlaying ? (
+                  <button className="playButton" onClick={playPause}>
+                    <IconContext.Provider
+                      value={{
+                        size: "3.5em",
+                        color: "#ffffff",
+                        className: "controlButtons",
+                      }}
+                    >
+                      <AiFillPlayCircle />
+                    </IconContext.Provider>
+                  </button>
+                ) : (
+                  <button className="playButton" onClick={playPause}>
+                    <IconContext.Provider
+                      value={{
+                        size: "3.5em",
+                        color: "#ffffff",
+                        className: "controlButtons",
+                      }}
+                    >
+                      <AiFillPauseCircle />
+                    </IconContext.Provider>
+                  </button>
+                )}
+                <button className="nextButton" onClick={nextTrack}>
+                  <IconContext.Provider
+                    value={{
+                      size: "2.5em",
+                      color: "#ffffff",
+                      className: "controlButtons",
+                    }}
+                  >
+                    <BiSkipNext />
+                  </IconContext.Provider>
+                </button>
+                <button className="shuffleButton" onClick={shuffleButton}>
+                  <IconContext.Provider
+                    value={{
+                      size: "2.0em",
+                      color: "#ffffff",
+                      className: "controlButtons",
+                    }}
+                  >
+                    <BiShuffle />
+                  </IconContext.Provider>
+                </button>
               </div>
               {showVolumeSlider && (
                 <input

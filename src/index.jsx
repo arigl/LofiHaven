@@ -7,12 +7,16 @@ import Player from "./Components/Player.jsx";
 import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
 import { BiExitFullscreen } from "react-icons/bi";
+import { IoSparklesSharp } from "react-icons/io5";
 import { IoMdSunny } from "react-icons/io";
+import { FaCloudRain } from "react-icons/fa";
+import { FaRegSnowflake } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import { Leva } from "leva";
-import { Loader } from "@react-three/drei";
+import { Loader, BakeShadows } from "@react-three/drei";
 import musicData from "./data/musicData.js";
 import { Analytics } from "@vercel/analytics/react";
+import Timer from "./Components/Tools/Timer.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -52,9 +56,14 @@ const fullscreenPlayerContainerStyle = {
 
 function App() {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isWeather, setWeather] = useState(true);
+  const [isWeather, setWeather] = useState("rain");
   const [isEnvironment, setEnvironment] = useState(false);
-  const [isLoading, setLoading] = useState(true); // State for tracking loading
+  const [showWeatherDropdown, setShowWeatherDropdown] = useState(false);
+  // const [isLoading, setLoading] = useState(true); // State for tracking loading
+
+  const [clockActive, setClockActive] = useState(false); // for the timer
+  const [clockTimes, setClockTimes] = useState([0, 0, 0]);
+  const [timerText, setTimerText] = useState("00:00:00");
 
   const [playList, setPlayList] = useState(musicData.chillMix);
 
@@ -64,7 +73,12 @@ function App() {
 
   const toggleWeather = () => {
     console.log("toggle enivornment");
-    setWeather(!isWeather);
+    setShowWeatherDropdown(!showWeatherDropdown);
+  };
+
+  const handleWeatherChange = (weatherType) => {
+    setWeather(weatherType);
+    setShowWeatherDropdown(false); // Hide dropdown after selecting an option
   };
 
   const toggleEnvironment = () => {
@@ -74,6 +88,23 @@ function App() {
 
   const handlePlayListChange = (playlist) => {
     setPlayList(playlist);
+  };
+
+  const handleClockToggle = (bool) => {
+    setClockActive(bool);
+  };
+
+  const handleClockTimes = (seconds, minutes, hours) => {
+    console.log(seconds);
+    console.log(minutes);
+    console.log(hours);
+    setClockTimes([seconds, minutes, hours]);
+    console.log(clockTimes);
+  };
+
+  const handleTimerText = (seconds, minutes, hours) => {
+    const timerString = seconds + ":" + minutes + ":" + hours;
+    setTimerText(timerString);
   };
 
   return (
@@ -111,29 +142,117 @@ function App() {
               isEnvironment={isEnvironment}
               isWeather={isWeather}
               currentPlaylist={playList}
+              clockActive={clockActive}
+              setClockActive={handleClockToggle}
+              clockTimes={clockTimes}
+              setClockTimes={handleClockTimes}
+              timerText={timerText}
+              setTimerText={handleTimerText}
             />
+            <BakeShadows />
           </Suspense>
         </Canvas>
         <Loader />
-        <button
-          style={{
-            position: "absolute ",
-            top: "10px",
-            right: "75px",
-            padding: "10px",
-            background: "#070F2B",
-            color: "#fff",
-            borderRadius: 5,
-            border: "none",
-            cursor: "pointer",
-            zIndex: 10000, // Ensure button is above canvas
-          }}
-          onClick={toggleWeather}
-        >
-          <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
-            <IoMdSunny />
-          </IconContext.Provider>
-        </button>
+        {clockActive && (
+          <Timer
+            hours={clockTimes[0]}
+            minutes={clockTimes[1]}
+            seconds={clockTimes[2]}
+            clockActive={clockActive}
+            setClockActive={handleClockToggle}
+            timerText={timerText}
+            setTimerText={handleTimerText}
+          />
+        )}
+
+        <div style={{ position: "absolute", top: "0px", right: "0px" }}>
+          {/* Weather toggle button */}
+          <button
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "75px",
+              padding: "10px",
+              background: "#070F2B",
+              color: "#fff",
+              borderRadius: 5,
+              border: "none",
+              cursor: "pointer",
+              zIndex: 10000, // Ensure button is above canvas
+            }}
+            onClick={toggleWeather}
+          >
+            <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+              <IoMdSunny />
+            </IconContext.Provider>
+          </button>
+
+          {/* Weather dropdown */}
+          {showWeatherDropdown && (
+            <div
+              style={{
+                position: "absolute",
+                top: "55px",
+                right: "75px",
+                background: "#070F2B",
+                // padding: "10px",
+                borderRadius: "5px",
+                zIndex: 10000, // Ensure dropdown is above canvas
+              }}
+            >
+              {/* Button for each weather type */}
+              <button
+                onClick={() => handleWeatherChange("rain")}
+                style={{
+                  background: "#070F2B",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  // margin: "5px",
+                  padding: "10px",
+                }}
+              >
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <FaCloudRain />
+                </IconContext.Provider>
+              </button>
+              <button
+                onClick={() => handleWeatherChange("snow")}
+                style={{
+                  background: "#070F2B",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  // margin: "5px",
+                  padding: "10px",
+                  borderBottomLeftRadius: "5px", // Set bottom left border radius
+                  borderBottomRightRadius: "5px", // Set bottom right border radius
+                }}
+              >
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <FaRegSnowflake />
+                </IconContext.Provider>
+              </button>
+              <button
+                onClick={() => handleWeatherChange("sparkles")}
+                style={{
+                  background: "#070F2B",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  // margin: "5px",
+                  padding: "10px",
+                  borderBottomLeftRadius: "5px", // Set bottom left border radius
+                  borderBottomRightRadius: "5px", // Set bottom right border radius
+                }}
+              >
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <IoSparklesSharp />
+                </IconContext.Provider>
+              </button>
+            </div>
+          )}
+        </div>
         <button
           style={{
             position: "absolute ",
