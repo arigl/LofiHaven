@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { Loader, OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { PerspectiveCamera, Sparkles } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
@@ -11,8 +11,12 @@ import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
 import { useControls } from "leva";
 import musicData from "../data/musicData";
-import React, { useRef, useState } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import Snow from "./Weather/Snow.js";
+import { JazzRoom } from "./Scenes/JazzRoom.jsx";
+import { ChillRoom } from "./Scenes/ChillRoom.jsx";
+import { useEffect } from "react";
+import { GamingRoom } from "./Scenes/GamingRoom.jsx";
 
 export default function Experience(props) {
   const { ambientIntensity } = useControls({ ambientIntensity: 1.5 });
@@ -24,6 +28,7 @@ export default function Experience(props) {
   const [isFocusedOn, setIsFocused] = useState(false);
   const sparkleSize = 8;
   const amount = 500;
+  const [isVisible, setIsVisible] = useState(false);
 
   // Define camera properties
   const cameraProps = {
@@ -34,11 +39,21 @@ export default function Experience(props) {
     position: [3.4, 2.7, -2.3], // Adjust camera position as needed
   };
 
+  useEffect(() => {
+    // Set a timeout to delay the visibility of the player to allow the fade-in effect
+    console.log("TESTING");
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Adjust the delay as needed
+
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <>
-      {/* <Perf position="top-left" /> */}
+      <Perf position="top-left" />
 
-      <directionalLight
+      {/* <directionalLight
         castShadow
         position={[1, 2, 3]}
         intensity={directionalIntensity}
@@ -50,9 +65,17 @@ export default function Experience(props) {
         // shadow-camera-bottom={-5}
         // shadow-camera-left={-5}
       />
-      <ambientLight intensity={ambientIntensity} />
+      <ambientLight intensity={ambientIntensity} /> */}
       {props.currentPlaylist === musicData.chillMix && (
-        <Model
+        // <Model
+        //   clockActive={props.clockActive}
+        //   setClockActive={props.setClockActive}
+        //   clockTimes={props.clockTimes}
+        //   setClockTimes={props.setClockTimes}
+        //   timerText={props.timerText}
+        //   setTimerText={props.setTimerText}
+        // />
+        <ChillRoom
           clockActive={props.clockActive}
           setClockActive={props.setClockActive}
           clockTimes={props.clockTimes}
@@ -61,17 +84,8 @@ export default function Experience(props) {
           setTimerText={props.setTimerText}
         />
       )}
-      {props.currentPlaylist === musicData.gamingMix && <GameRoom />}
-      {props.currentPlaylist === musicData.jazzMix && (
-        <Model
-          clockActive={props.clockActive}
-          setClockActive={props.setClockActive}
-          clockTimes={props.clockTimes}
-          setClockTimes={props.setClockTimes}
-          timerText={props.timerText}
-          setTimerText={props.setTimerText}
-        />
-      )}
+      {props.currentPlaylist === musicData.gamingMix && <GamingRoom />}
+      {props.currentPlaylist === musicData.jazzMix && <JazzRoom />}
       <StringLights />
       {props.isWeather == "rain" && <Rain isWeather={props.isWeather} />}
       {props.isWeather == "sparkles" && (
@@ -86,7 +100,7 @@ export default function Experience(props) {
       )}
       {props.isWeather == "snow" && <Snow isWeather={props.isWeather} />}
 
-      {props.isEnvironment && (
+      {/* {props.isEnvironment && (
         <Environment
           files="rainforest_trail_4k.hdr"
           background
@@ -94,7 +108,7 @@ export default function Experience(props) {
           far={5}
           resolution={2000}
         />
-      )}
+      )} */}
     </>
   );
 }

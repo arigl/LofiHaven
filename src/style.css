@@ -330,13 +330,11 @@ Search CSS (Playlists, songs, etc.)
   margin-bottom: 1rem;
 }
 
-.playlistListing {
-  font-family: "Unica One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  text-align: left;
-  letter-spacing: 3px;
-  justify-content: space-between;
+.playlistThumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .playlistButton {
@@ -459,6 +457,7 @@ Search CSS (Playlists, songs, etc.)
 .playListView {
   display: flex;
   flex-direction: column;
+  margin-top: 1.5rem;
   gap: 10px;
 }
 
@@ -472,6 +471,88 @@ Search CSS (Playlists, songs, etc.)
   padding-left: 4%;
   margin-right: 4%;
   padding: 5%;
+}
+
+.playlistListing {
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.cozyListing {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: white;
+  align-items: center;
+  background-color: #58878f61;
+  padding-left: 4%;
+  margin-right: 4%;
+  padding: 5%;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: 2px solid #58878f61;
+}
+
+.cozyListing:hover {
+  border: 2px solid #0575c5; /* Specify border properties on hover */
+}
+
+.gamingListing {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: white;
+  align-items: center;
+  background-color: #8f585861;
+  padding-left: 4%;
+  margin-right: 4%;
+  padding: 5%;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: 2px solid #8f585861;
+}
+
+.gamingListing:hover {
+  border: 2px solid rgba(255, 0, 0, 0.375); /* Specify border properties on hover */
+}
+
+.jazzListing {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  color: white;
+  align-items: center;
+  background-color: #898f5861;
+  padding-left: 4%;
+  margin-right: 4%;
+  padding: 5%;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  letter-spacing: 3px;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: 2px solid #898f5861;
+}
+
+.jazzListing:hover {
+  border: 2px solid rgba(255, 208, 0, 0.375); /* Specify border properties on hover */
 }
 
 .timer {
@@ -521,6 +602,29 @@ Search CSS (Playlists, songs, etc.)
   font-family: "Unica One", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+/*
+Loader Styling
+*/
+
+.startLoader {
+  /* position: fixed;
+  top: 0;
+  left: 0; */
+  /* background-color: rgb(44, 42, 55); */
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 9999;
 }
 
 /* Firefox (uncomment to work in Firefox, although other properties will not work!)  */

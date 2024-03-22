@@ -1,22 +1,24 @@
 import "./style.css";
+import "./Components/Styles/Main.css";
+
 import ReactDOM from "react-dom/client";
-import { Suspense, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useState, useEffect } from "react";
+import { Canvas, act } from "@react-three/fiber";
 import Experience from "./Components/Experience.jsx";
 import Player from "./Components/Player.jsx";
 import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
-import { BiExitFullscreen } from "react-icons/bi";
+import { BiExitFullscreen, BiWorld } from "react-icons/bi";
 import { IoSparklesSharp } from "react-icons/io5";
 import { IoMdSunny } from "react-icons/io";
-import { FaCloudRain } from "react-icons/fa";
-import { FaRegSnowflake } from "react-icons/fa";
-import { BiWorld } from "react-icons/bi";
+import { FaCloudRain, FaRegSnowflake } from "react-icons/fa";
 import { Leva } from "leva";
-import { Loader, BakeShadows } from "@react-three/drei";
+import { Loader, BakeShadows, useProgress } from "@react-three/drei";
 import musicData from "./data/musicData.js";
 import { Analytics } from "@vercel/analytics/react";
 import Timer from "./Components/Tools/Timer.jsx";
+import SceneLoader from "./Components/Loaders/SceneLoader.jsx";
+import SoundEffects from "./Components/Menus/SoundEffects.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -39,6 +41,10 @@ const normalCanvasStyle = {
   width: "65vw",
 };
 
+const loadingCanvasStyle = {
+  width: "100vw",
+};
+
 const normalPlayerContainerStyle = {
   width: "35%", // Half of the viewport width
   height: "100%", // Adjust as needed
@@ -54,6 +60,65 @@ const fullscreenPlayerContainerStyle = {
   zIndex: 9999, // Adjust as needed
 };
 
+const loaderContainerStyle = {
+  backgroundColor: "rgb(44, 42, 55)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  // position: "absolute",
+  // top: "50%", // Center vertically
+  // left: "50%", // Center horizontally
+  // transform: "translate(-50%, -50%)", // Center both vertically and horizontally
+  // width: "100%",
+  // height: "100%",
+  // background: "#171717",
+  // display: "flex",
+  // flexDirection: "column", // Stack items vertically
+  // alignItems: "center",
+  // justifyContent: "center",
+  // transition: "opacity 300ms ease",
+  // zIndex: 1000,
+};
+const loaderInnerStyle = {
+  // position: "absolute",
+  // left: "50%",
+  // bottom: "5%",
+  // width: "100%",
+  width: 100,
+  height: 10,
+  //background: "#272727",
+  backgroundColor: "rgb(44, 42, 55)",
+  textAlign: "center",
+  // transform: "translate(-50%, -50%)",
+};
+const loaderBarStyle = {
+  position: "absolute",
+  left: "15%",
+  bottom: "10%",
+  width: "70%",
+  height: 10,
+  // height: 3,
+  // width: "100%",
+  // background: "white",
+  // transition: "transform 200ms",
+  // transformOrigin: "left center",
+};
+const loaderTextStyle = {
+  // display: "flex",
+  // position: "absolute",
+  // top: "5%",
+  // backgroundColor: "rgb(44, 42, 55)",
+  position: "absolute",
+  fontFamily: "Unica One",
+  fontWeight: 400,
+  fontStyle: "normal",
+  fontSize: "2.5rem",
+  textAlign: "center",
+  marginTop: "-3.0em",
+  color: "#f0f0f0",
+  transform: "translate(-50%, -50%)",
+};
+
 function App() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isWeather, setWeather] = useState("rain");
@@ -66,6 +131,10 @@ function App() {
   const [timerText, setTimerText] = useState("00:00:00");
 
   const [playList, setPlayList] = useState(musicData.chillMix);
+
+  const { active, progress, errors, item, loaded, total } = useProgress();
+  const [canvasIsVisible, setCanvasVisible] = useState(true);
+  const [playerIsVisible, setPlayerVisible] = useState(true);
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -95,17 +164,29 @@ function App() {
   };
 
   const handleClockTimes = (seconds, minutes, hours) => {
-    console.log(seconds);
-    console.log(minutes);
-    console.log(hours);
     setClockTimes([seconds, minutes, hours]);
-    console.log(clockTimes);
   };
 
   const handleTimerText = (seconds, minutes, hours) => {
     const timerString = seconds + ":" + minutes + ":" + hours;
     setTimerText(timerString);
   };
+
+  useEffect(() => {
+    // Set a timeout to delay the visibility of the player to allow the fade-in effect
+    // console.log("use effect");
+    // console.log(active);
+    // if (active == false) {
+    //   setCanvasVisible(false);
+    //   const timeout = setTimeout(() => {
+    //     setPlayerVisible(true);
+    //     setCanvasVisible(true);
+    //     console.log("TIMEOUT COMPLETE");
+    //   }, 1000); // Adjust the delay as needed
+    //   console.log("TIMEOUT START");
+    //   return () => clearTimeout(timeout);
+    // }
+  }, [active]);
 
   return (
     <div style={containerStyle}>
@@ -118,17 +199,30 @@ function App() {
             : fullscreenPlayerContainerStyle
         }
       >
-        {
-          <Player
-            isFullscreen={isFullscreen}
-            currentPlaylist={playList}
-            setPlayList={handlePlayListChange}
-          />
-        }
+        <Player
+          isFullscreen={isFullscreen}
+          currentPlaylist={playList}
+          setPlayList={handlePlayListChange}
+        />
       </div>
-      <div style={isFullscreen ? fullSizeCanvasStyle : normalCanvasStyle}>
+      <div
+        className={`canvas ${canvasIsVisible ? "visible" : ""}`}
+        style={
+          active
+            ? loadingCanvasStyle
+            : isFullscreen
+            ? fullSizeCanvasStyle
+            : normalCanvasStyle
+        }
+      >
         <Canvas
-          style={isFullscreen ? fullSizeCanvasStyle : normalCanvasStyle}
+          style={
+            active
+              ? loadingCanvasStyle
+              : isFullscreen
+              ? fullSizeCanvasStyle
+              : normalCanvasStyle
+          }
           shadows
           camera={{
             fov: 45,
@@ -149,10 +243,16 @@ function App() {
               timerText={timerText}
               setTimerText={handleTimerText}
             />
-            <BakeShadows />
+            {/* <BakeShadows /> */}
           </Suspense>
         </Canvas>
-        <Loader />
+        <Loader
+          containerStyles={loaderContainerStyle}
+          innerStyles={loaderInnerStyle}
+          dataStyles={loaderTextStyle}
+          barStyles={loaderBarStyle}
+          dataInterpolation={(p) => `Welcome to Lofi Haven`}
+        />
         {clockActive && (
           <Timer
             hours={clockTimes[0]}
@@ -253,7 +353,7 @@ function App() {
             </div>
           )}
         </div>
-        <button
+        {/* <button
           style={{
             position: "absolute ",
             top: "10px",
@@ -271,7 +371,7 @@ function App() {
           <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
             <BiWorld />
           </IconContext.Provider>
-        </button>
+        </button> */}
         <button
           style={{
             position: "absolute",
@@ -297,6 +397,8 @@ function App() {
             </IconContext.Provider>
           )}
         </button>
+
+        <SoundEffects />
       </div>
     </div>
   );

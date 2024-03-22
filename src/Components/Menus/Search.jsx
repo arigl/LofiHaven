@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 
-
 export default function Search(props) {
   const handleTrackClick = (index, playList) => {
     console.log(index);
@@ -30,24 +29,49 @@ export default function Search(props) {
     <div className="searchMenu">
       {!isPlaylist && (
         <div>
-          <h1 className="searchHeader">Playlists</h1>
+          {/* <h1 className="searchHeader">Playlists</h1> */}
           <div className="playListView">
-            <div className="playlistListing">
-              {musicData.chillMix.playListTitle}
-              <button className="playlistButton" onClick={() => handlePlayListClick(musicData.chillMix)}>
-                <p className="playlistButtonText"><FaArrowAltCircleRight /></p>
+            <div className="cozyListing">
+              <div className="playlistThumb">
+                <img src="Cozy_Thumbnail.png" width={75} height={75}></img>
+                {musicData.chillMix.playListTitle}
+              </div>
+
+              <button
+                className="playlistButton"
+                onClick={() => handlePlayListClick(musicData.chillMix)}
+              >
+                <p className="playlistButtonText">
+                  <FaArrowAltCircleRight />
+                </p>
               </button>
             </div>
-            <div className="playlistListing">
-              {musicData.gamingMix.playListTitle}
-              <button className="playlistButton" onClick={() => handlePlayListClick(musicData.gamingMix)}>
-                <p className="playlistButtonText"><FaArrowAltCircleRight /></p>
+            <div className="gamingListing">
+              <div className="playlistThumb">
+                <img src="Cozy_Thumbnail.png" width={75} height={75}></img>
+                {musicData.gamingMix.playListTitle}
+              </div>
+              <button
+                className="playlistButton"
+                onClick={() => handlePlayListClick(musicData.gamingMix)}
+              >
+                <p className="playlistButtonText">
+                  <FaArrowAltCircleRight />
+                </p>
               </button>
             </div>
-            <div className="playlistListing">
-              {musicData.jazzMix.playListTitle}
-              <button className="playlistButton" onClick={() => handlePlayListClick(musicData.jazzMix)}>
-                <p className="playlistButtonText"><FaArrowAltCircleRight /></p>
+            <div className="jazzListing">
+              <div className="playlistThumb">
+                <img src="Cozy_Thumbnail.png" width={75} height={75}></img>
+                {musicData.jazzMix.playListTitle}
+              </div>
+              <button
+                className="playlistButton"
+                onClick={() => handlePlayListClick(musicData.jazzMix)}
+              >
+                <p className="playlistButtonText">
+                  <FaArrowAltCircleRight />
+                </p>
               </button>
             </div>
           </div>
@@ -68,23 +92,22 @@ export default function Search(props) {
           >
             {playListSongs.map((music, index) => (
               <div className="songListing" key={music.title}>
-                <div className="songListingDesc"> 
-                <img
-                  className="searchAlbumArt"
-                  src={music.art}
-                  alt={music.title}
-                ></img>
-                <div className="searchArtistDesc">
-                  <p className="searchTitle">{music.title}</p>
-                  <p className="searchSubtitle">{music.artist}</p>
+                <div className="songListingDesc">
+                  <img
+                    className="searchAlbumArt"
+                    src={music.art}
+                    alt={music.title}
+                  ></img>
+                  <div className="searchArtistDesc">
+                    <p className="searchTitle">{music.title}</p>
+                    <p className="searchSubtitle">{music.artist}</p>
+                  </div>
                 </div>
-                </div>
-                
-                <button className="songButton"
+                <button
+                  className="songButton"
                   onClick={() => handleTrackClick(index, currentPlaylist)}
                 >
                   <FaPlay />
-
                 </button>{" "}
                 {/* Add a button to handle click */}
               </div>

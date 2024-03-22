@@ -1,0 +1,17 @@
+.player {
+  opacity: 0;
+  transition: opacity 1s ease; /* Transition over 2 seconds */
+}
+
+.player.visible {
+  opacity: 1;
+}
+
+.canvas {
+  opacity: 0;
+  transition: opacity 1s ease; /* Transition over 2 seconds */
+}
+
+.canvas.visible {
+  opacity: 1;
+}
