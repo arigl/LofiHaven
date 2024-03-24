@@ -63,7 +63,7 @@ export function JazzLights(props) {
       /> */}
       {/* <planeGeometry position={[0, 0.1, 0]} /> */}
       {/* <ContactShadows position={[0, 0.1, 0]} scale={10} /> */}
-      <spotLight
+      {/* <spotLight
         position={[-1.59, 2.77, -0.15]}
         intensity={10}
         color="#FFA500"
@@ -71,7 +71,7 @@ export function JazzLights(props) {
         decay={5}
         angle={0.6}
         penumbra={0.8}
-      />
+      /> */}
       {/* <Sphere
         position={[plPosition.x, plPosition.y, plPosition.z]}
         scale={0.1}

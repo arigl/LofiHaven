@@ -12,7 +12,7 @@ import { useState } from "react";
 
 import { CozyLights } from "../Lights/CozyLights";
 export function ChillRoom(props) {
-  const { nodes, materials } = useGLTF("/ChillRoom-transformed.glb");
+  const { nodes, materials } = useGLTF("/Chillroom-transformed.glb");
   const { size } = useThree();
   const aspect = size.width / size.height;
 
@@ -80,8 +80,8 @@ export function ChillRoom(props) {
         material={materials["Wood.006"]}
         position={[-0.619, 1.313, 2.467]}
         scale={0.7}
-        receiveShadow
         castShadow
+        receiveShadow
       />
       <mesh
         geometry={nodes.Plane018.geometry}
@@ -90,6 +90,7 @@ export function ChillRoom(props) {
         rotation={[0, 0.255, 0]}
         scale={0.6}
         castShadow
+        receiveShadow
       />
       <mesh
         geometry={nodes.Cube002.geometry}
@@ -115,8 +116,6 @@ export function ChillRoom(props) {
         position={[-1.09, 1.822, 2.977]}
         rotation={[-Math.PI, 1.536, -Math.PI]}
         scale={0.4}
-        castShadow
-        receiveShadow
       />
       <mesh
         geometry={nodes.Cube004.geometry}
@@ -132,7 +131,7 @@ export function ChillRoom(props) {
         rotation={[0, -0.733, 0]}
         scale={2.2}
         castShadow
-        // receiveShadow
+        receiveShadow
       />
       <group
         position={[-2.17, 4.77, 2.83]}
@@ -174,4 +173,4 @@ export function ChillRoom(props) {
   );
 }
 
-useGLTF.preload("/ChillRoom-transformed.glb");
+useGLTF.preload("/Chillroom-transformed.glb");

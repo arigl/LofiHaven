@@ -48,7 +48,7 @@ export default function Search(props) {
             </div>
             <div className="gamingListing">
               <div className="playlistThumb">
-                <img src="Cozy_Thumbnail.png" width={75} height={75}></img>
+                <img src="Gaming_Thumbnail.png" width={75} height={75}></img>
                 {musicData.gamingMix.playListTitle}
               </div>
               <button
@@ -62,7 +62,7 @@ export default function Search(props) {
             </div>
             <div className="jazzListing">
               <div className="playlistThumb">
-                <img src="Cozy_Thumbnail.png" width={75} height={75}></img>
+                <img src="Jazz_Thumbnail.png" width={75} height={75}></img>
                 {musicData.jazzMix.playListTitle}
               </div>
               <button

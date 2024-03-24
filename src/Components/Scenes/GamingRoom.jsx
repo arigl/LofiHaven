@@ -10,7 +10,7 @@ import { OrbitControls } from "@react-three/drei";
 import { GameLights } from "../Lights/GameLights";
 
 export function GamingRoom(props) {
-  const { nodes, materials } = useGLTF("/GamingRoom-transformed.glb");
+  const { nodes, materials } = useGLTF("/Gaming-transformed.glb");
 
   return (
     <group {...props} dispose={null}>
@@ -26,6 +26,12 @@ export function GamingRoom(props) {
         zoomSpeed={0.3}
       />
       <primitive object={nodes.spine} />
+      <lineSegments
+        geometry={nodes.Xbox_Series_X.geometry}
+        material={materials.PaletteMaterial001}
+        position={[3.021, 0.126, -3.391]}
+        scale={2}
+      />
       <mesh
         geometry={nodes.Plane003.geometry}
         material={materials.PaletteMaterial001}
@@ -47,21 +53,25 @@ export function GamingRoom(props) {
           castShadow
         />
       </group>
+      <mesh
+        geometry={nodes.Plane001.geometry}
+        material={materials["Material.001"]}
+        position={[1.636, 0.003, 1.381]}
+        scale={[2.05, 1, 2.45]}
+        receiveShadow
+      />
       <group position={[-3.153, 0, 3.033]} scale={[0.754, 0.864, 0.894]}>
         <mesh
           geometry={nodes.Plane050.geometry}
           material={materials["screen-arcade"]}
-          castShadow
         />
         <mesh
           geometry={nodes.Plane050_1.geometry}
           material={materials["arcade-header"]}
-          castShadow
         />
         <mesh
           geometry={nodes.Plane050_2.geometry}
           material={materials.PaletteMaterial005}
-          castShadow
         />
       </group>
       <mesh
@@ -158,6 +168,12 @@ export function GamingRoom(props) {
           material={materials.PaletteMaterial010}
         />
       </group>
+      <mesh
+        geometry={nodes.Cube006.geometry}
+        material={materials.PaletteMaterial011}
+        position={[3.03, 0.627, -3.337]}
+        scale={2}
+      />
       <skinnedMesh
         geometry={nodes.Circle011.geometry}
         material={materials.PaletteMaterial001}
@@ -165,6 +181,8 @@ export function GamingRoom(props) {
         position={[-3.206, -0.05, -2.935]}
         rotation={[0, 1.025, 0]}
         scale={2.064}
+        castShadow
+        receiveShadow
       />
       <skinnedMesh
         geometry={nodes.Circle012.geometry}
@@ -173,32 +191,40 @@ export function GamingRoom(props) {
         position={[-3.206, -0.05, -2.935]}
         rotation={[0, 1.025, 0]}
         scale={2.064}
+        castShadow
+        receiveShadow
       />
       <group
         position={[-3.206, -0.05, -2.935]}
         rotation={[0, 1.025, 0]}
         scale={2.064}
+        castShadow
+        receiveShadow
       >
         <skinnedMesh
-          geometry={nodes.Circle015.geometry}
+          geometry={nodes.Mesh_1.geometry}
           material={materials.PaletteMaterial001}
-          skeleton={nodes.Circle015.skeleton}
+          skeleton={nodes.Mesh_1.skeleton}
+          castShadow
+          receiveShadow
         />
         <skinnedMesh
-          geometry={nodes.Circle015_1.geometry}
+          geometry={nodes.Mesh_2.geometry}
           material={materials.PaletteMaterial001}
-          skeleton={nodes.Circle015_1.skeleton}
+          skeleton={nodes.Mesh_2.skeleton}
+          castShadow
+          receiveShadow
         />
       </group>
       <mesh
         geometry={nodes.Plane_1.geometry}
-        material={materials["90s Arcade Carpet"]}
+        material={materials["Wood Floor"]}
         receiveShadow
       />
       <mesh
         geometry={nodes.Plane_2.geometry}
         material={materials["Sci-Fi Panel"]}
-        castShadow
+        c
         receiveShadow
       />
       <instancedMesh
@@ -213,4 +239,4 @@ export function GamingRoom(props) {
   );
 }
 
-useGLTF.preload("/GamingRoom-transformed.glb");
+useGLTF.preload("/Gaming-transformed.glb");

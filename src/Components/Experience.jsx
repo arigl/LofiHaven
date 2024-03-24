@@ -3,7 +3,6 @@ import { Perf } from "r3f-perf";
 import { PerspectiveCamera, Sparkles } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Model } from "./Scenes/Model.jsx";
-import { GameRoom } from "./Scenes/GameRoom";
 import { Environment } from "@react-three/drei";
 import { StringLights } from "./Lights/StringLights";
 import Rain from "./Weather/Rain.js";
