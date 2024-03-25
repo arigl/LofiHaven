@@ -3,12 +3,14 @@ import { Canvas } from "@react-three/fiber";
 
 import { useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
+import { String } from "./String";
 
 export function StringLights(props) {
   let pointLightIntensity = 15;
   let pointLightDistance = 0.2;
   return (
     <group>
+      <String />
       <pointLight
         position={[-0.66, 6.19, -3.31]}
         intensity={pointLightIntensity}

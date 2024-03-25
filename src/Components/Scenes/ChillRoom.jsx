@@ -11,6 +11,8 @@ import { PerspectiveCamera } from "@react-three/drei";
 import { useState } from "react";
 
 import { CozyLights } from "../Lights/CozyLights";
+import { Books } from "../Misc Items/Books";
+import { StringLights } from "../Lights/StringLights";
 export function ChillRoom(props) {
   const { nodes, materials } = useGLTF("/Chillroom-transformed.glb");
   const { size } = useThree();
@@ -42,6 +44,8 @@ export function ChillRoom(props) {
     <group {...props} dispose={null}>
       <CozyLights />
       <Journal />
+      <Books />
+      <StringLights />
       <Clock
         isFocused={isFocused}
         setIsFocused={handleFocus}

@@ -4,7 +4,6 @@ import { PerspectiveCamera, Sparkles } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Model } from "./Scenes/Model.jsx";
 import { Environment } from "@react-three/drei";
-import { StringLights } from "./Lights/StringLights";
 import Rain from "./Weather/Rain.js";
 import { IconContext } from "react-icons"; // for customizing the icons
 import { RiFullscreenFill } from "react-icons/ri";
@@ -50,7 +49,7 @@ export default function Experience(props) {
 
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
 
       {/* <directionalLight
         castShadow
@@ -85,7 +84,6 @@ export default function Experience(props) {
       )}
       {props.currentPlaylist === musicData.gamingMix && <GamingRoom />}
       {props.currentPlaylist === musicData.jazzMix && <JazzRoom />}
-      <StringLights />
       {props.isWeather == "rain" && <Rain isWeather={props.isWeather} />}
       {props.isWeather == "sparkles" && (
         <Sparkles
