@@ -17,17 +17,29 @@ import { Dog } from "../Interactables/Dog";
 import { ChillComputer } from "../Interactables/ChillComputer";
 export function ChillRoom(props) {
   const { nodes, materials } = useGLTF("/Chillroom-transformed.glb");
-  const { size } = useThree();
+  const { size, camera } = useThree();
   const aspect = size.width / size.height;
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const { position } = useControls({
-    position: {
-      value: { x: -0.76, y: 6.19, z: -3.31 },
-      step: 0.01,
-    },
-  });
+  // const { position } = useControls({
+  //   position: {
+  //     value: { x: -0.76, y: 6.19, z: -3.31 },
+  //     step: 0.01,
+  //   },
+  // });
+
+  camera.setViewOffset(
+    size.width,
+    size.height,
+    0,
+    -140,
+    size.width,
+    size.height
+  );
+  if (!isFocused) {
+    camera.position.set(100, 0, 100);
+  }
 
   const clockCameraProps = {
     fov: 75,

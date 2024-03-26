@@ -6,17 +6,32 @@ Files: GamingRoom.glb [30.19MB] > C:\Users\alexr\Documents\Development\Lofi site
 
 import React, { useRef, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
+
 import { OrbitControls } from "@react-three/drei";
 import { GameLights } from "../Lights/GameLights";
 import * as THREE from "three";
 
 import { VideoTexture } from "three";
+import { Stormtrooper } from "../Interactables/Stormtrooper";
 
 export function GamingRoom(props) {
   const { nodes, materials } = useGLTF("/Gaming-transformed.glb");
+  const { size, camera } = useThree();
   const videoTexture = useRef(null);
   const video = document.createElement("video");
   const [showVideo, setShowVideo] = useState(true);
+
+  // camera.setViewOffset(
+  //   size.width,
+  //   size.height,
+  //   0,
+  //   -140,
+  //   size.width,
+  //   size.height
+  // );
+
+  camera.position.set(100, 0, 100);
 
   const loadVideoTexture = () => {
     //const video = document.createElement("video");
@@ -67,6 +82,7 @@ export function GamingRoom(props) {
         enablePan={true}
         zoomSpeed={0.3}
       />
+      <Stormtrooper />
       <primitive object={nodes.spine} />
       <lineSegments
         geometry={nodes.Xbox_Series_X.geometry}
