@@ -31,7 +31,7 @@ export function GamingRoom(props) {
   //   size.height
   // );
 
-  camera.position.set(100, 0, 100);
+  //camera.position.set(100, 0, 100);
 
   const loadVideoTexture = () => {
     //const video = document.createElement("video");
@@ -50,6 +50,10 @@ export function GamingRoom(props) {
     videoTexture.current.format = THREE.RGBAFormat;
     videoTexture.current.flipY = false;
   };
+
+  useEffect(() => {
+    camera.position.set(100, 0, 100);
+  }, []);
 
   useEffect(() => {
     console.log("use effect");
@@ -74,6 +78,8 @@ export function GamingRoom(props) {
       <GameLights />
       <OrbitControls
         makeDefault
+        minZoom={40}
+        maxZoom={100}
         minAzimuthAngle={0}
         maxAzimuthAngle={Math.PI / 2}
         minPolarAngle={Math.PI / 3}

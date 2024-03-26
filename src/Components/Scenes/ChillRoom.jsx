@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 
@@ -54,6 +54,13 @@ export function ChillRoom(props) {
     setIsFocused(bool);
     console.log(isFocused);
   };
+
+  useEffect(() => {
+    if (!isFocused) {
+      camera.position.set(100, 0, 100);
+    }
+  }, []);
+
   return (
     <group {...props} dispose={null}>
       <CozyLights />
@@ -75,9 +82,8 @@ export function ChillRoom(props) {
       {!isFocused && (
         <OrbitControls
           // makeDefault
-          // minDistance={1}
-          // // originally 10 for min
-          // maxDistance={50}
+          minZoom={40}
+          maxZoom={130}
           // maxPolarAngle={Math.PI / 2}
           // // enablePan={false}
           makeDefault
