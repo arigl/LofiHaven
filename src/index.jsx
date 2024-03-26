@@ -200,7 +200,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <Leva />
+      <Leva hidden />
       <Analytics />
       <div
         style={

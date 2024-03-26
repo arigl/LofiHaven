@@ -80,7 +80,7 @@ export default function Search(props) {
       {isPlaylist && (
         <div>
           <div className="playListHeader">
-            <h1 className="playListName">{props.playList.playListTitle}</h1>
+            <h1 className="playListName">{currentPlaylist.playListTitle}</h1>
             <button className="viewPlayListButton" onClick={toggleIsPlayList}>
               View Playlists
             </button>

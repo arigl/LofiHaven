@@ -16,7 +16,9 @@ export default function SoundEffects() {
   const [expand, setExpand] = useState(false);
 
   const [rain, setRain] = useState(null);
+  const [isRainPlaying, setIsRainPlaying] = useState(null);
   const [nature, setNature] = useState(null);
+  const [isNaturePlaying, setIsNaturePlaying] = useState(null);
 
   const [rainVolume, setRainVolume] = useState(0);
   const [natureVolume, setNatureVolume] = useState(0);
@@ -32,6 +34,7 @@ export default function SoundEffects() {
         },
         onplay: () => {
           //
+          setIsRainPlaying(true);
         },
       });
 
@@ -39,7 +42,13 @@ export default function SoundEffects() {
       //setRainVolume(0.3);
       console.log("rain");
     } else {
-      rain.pause();
+      if (isRainPlaying) {
+        rain.pause();
+        setIsRainPlaying(false);
+      } else {
+        rain.play();
+        setIsRainPlaying(true);
+      }
     }
   }
 
@@ -53,7 +62,7 @@ export default function SoundEffects() {
           ///
         },
         onplay: () => {
-          //
+          setIsNaturePlaying(true);
         },
       });
 
@@ -61,7 +70,13 @@ export default function SoundEffects() {
       //setNatureVolume(0.3);
       console.log("nature");
     } else {
-      nature.pause();
+      if (isNaturePlaying) {
+        nature.pause();
+        setIsNaturePlaying(false);
+      } else {
+        nature.play();
+        setIsNaturePlaying(true);
+      }
     }
   }
 
@@ -79,7 +94,7 @@ export default function SoundEffects() {
           ///
         },
         onplay: () => {
-          //
+          setIsRainPlaying(true);
         },
       });
 
@@ -102,7 +117,7 @@ export default function SoundEffects() {
           ///
         },
         onplay: () => {
-          //
+          setIsNaturePlaying(true);
         },
       });
 
@@ -161,9 +176,16 @@ export default function SoundEffects() {
                 padding: "10px",
               }}
             >
-              <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
-                <FaCloudRain />
-              </IconContext.Provider>
+              {isRainPlaying && (
+                <IconContext.Provider value={{ size: "2em", color: "#ADD8E6" }}>
+                  <FaCloudRain />
+                </IconContext.Provider>
+              )}
+              {!isRainPlaying && (
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <FaCloudRain />
+                </IconContext.Provider>
+              )}
             </button>
             <input
               type="range"
@@ -190,9 +212,16 @@ export default function SoundEffects() {
                 borderRadius: "5px",
               }}
             >
-              <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
-                <FaEarlybirds />
-              </IconContext.Provider>
+              {isNaturePlaying && (
+                <IconContext.Provider value={{ size: "2em", color: "#ADD8E6" }}>
+                  <FaEarlybirds />
+                </IconContext.Provider>
+              )}
+              {!isNaturePlaying && (
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <FaEarlybirds />
+                </IconContext.Provider>
+              )}
             </button>
             <input
               type="range"
