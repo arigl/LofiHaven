@@ -222,7 +222,7 @@ export function GamingRoom(props) {
         position={[3.03, 0.627, -3.337]}
         scale={2}
       />
-      <skinnedMesh
+      {/* <skinnedMesh
         geometry={nodes.Circle011.geometry}
         material={materials.PaletteMaterial001}
         skeleton={nodes.Circle011.skeleton}
@@ -231,8 +231,8 @@ export function GamingRoom(props) {
         scale={2.064}
         castShadow
         receiveShadow
-      />
-      <skinnedMesh
+      /> */}
+      {/* <skinnedMesh
         geometry={nodes.Circle012.geometry}
         material={materials.PaletteMaterial001}
         skeleton={nodes.Circle012.skeleton}
@@ -241,7 +241,7 @@ export function GamingRoom(props) {
         scale={2.064}
         castShadow
         receiveShadow
-      />
+      /> */}
       <group
         position={[-3.206, -0.05, -2.935]}
         rotation={[0, 1.025, 0]}
@@ -249,7 +249,7 @@ export function GamingRoom(props) {
         castShadow
         receiveShadow
       >
-        <skinnedMesh
+        {/* <skinnedMesh
           geometry={nodes.Mesh_1.geometry}
           material={materials.PaletteMaterial001}
           skeleton={nodes.Mesh_1.skeleton}
@@ -262,7 +262,7 @@ export function GamingRoom(props) {
           skeleton={nodes.Mesh_2.skeleton}
           castShadow
           receiveShadow
-        />
+        /> */}
       </group>
       <mesh
         geometry={nodes.Plane_1.geometry}
