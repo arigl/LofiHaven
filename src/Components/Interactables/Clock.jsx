@@ -38,13 +38,17 @@ export function Clock(props) {
 
     // Iterate through all input fields
     inputs.forEach((input) => {
-      console.log(input);
-      if (input.value != "" || null || "0") {
-        inputValues.push(input.value); // Push input values to the array
+      console.log(input.value);
+      if (input.value != "") {
+        if (input.value != null) {
+          inputValues.push(input.value); // Push input values to the array
+        }
       } else {
-        inputValues.push("00");
+        inputValues.push("0");
       }
     });
+
+    console.log(inputValues);
 
     // Concatenate all input values with a colon separator
     const concatenatedText = inputValues.join(":");

@@ -13,6 +13,8 @@ import { useState } from "react";
 import { CozyLights } from "../Lights/CozyLights";
 import { Books } from "../Misc Items/Books";
 import { StringLights } from "../Lights/StringLights";
+import { Dog } from "../Interactables/Dog";
+import { ChillComputer } from "../Interactables/ChillComputer";
 export function ChillRoom(props) {
   const { nodes, materials } = useGLTF("/Chillroom-transformed.glb");
   const { size } = useThree();
@@ -43,7 +45,7 @@ export function ChillRoom(props) {
   return (
     <group {...props} dispose={null}>
       <CozyLights />
-      <Journal />
+      {/* <Journal /> */}
       <Books />
       <StringLights />
       <Clock
@@ -56,6 +58,8 @@ export function ChillRoom(props) {
         timerText={props.timerText}
         setTimerText={props.setTimerText}
       />
+      <ChillComputer />
+      <Dog />
       {!isFocused && (
         <OrbitControls
           // makeDefault
@@ -90,9 +94,9 @@ export function ChillRoom(props) {
       <mesh
         geometry={nodes.Plane018.geometry}
         material={materials.PaletteMaterial001}
-        position={[-1.791, 1.821, 2.546]}
+        position={[-1.571, 1.861, 2.726]}
         rotation={[0, 0.255, 0]}
-        scale={0.6}
+        scale={0.4}
         castShadow
         receiveShadow
       />
@@ -117,7 +121,7 @@ export function ChillRoom(props) {
       <mesh
         geometry={nodes.Circle004.geometry}
         material={nodes.Circle004.material}
-        position={[-1.09, 1.822, 2.977]}
+        position={[-0.74, 1.822, 2.967]}
         rotation={[-Math.PI, 1.536, -Math.PI]}
         scale={0.4}
       />
@@ -151,9 +155,9 @@ export function ChillRoom(props) {
       <mesh
         geometry={nodes.Plane019.geometry}
         material={materials.PaletteMaterial002}
-        position={[-1.791, 1.821, 2.546]}
+        position={[-1.571, 1.861, 2.726]}
         rotation={[0, 0.255, 0]}
-        scale={0.6}
+        scale={0.4}
       />
       <group
         position={[-0.623, 6.308, -3.454]}
@@ -163,8 +167,8 @@ export function ChillRoom(props) {
         {/* <mesh
           geometry={nodes.Mesh_4.geometry}
           material={materials.PaletteMaterial004}
-        /> */}
-        {/* <mesh
+        />
+        <mesh
           geometry={nodes.Mesh_5.geometry}
           material={materials.PaletteMaterial005}
         /> */}

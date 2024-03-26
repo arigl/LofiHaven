@@ -2,7 +2,6 @@ import { Loader, OrbitControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { PerspectiveCamera, Sparkles } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { Model } from "./Scenes/Model.jsx";
 import { Environment } from "@react-three/drei";
 import Rain from "./Weather/Rain.js";
 import { IconContext } from "react-icons"; // for customizing the icons
@@ -39,7 +38,6 @@ export default function Experience(props) {
 
   useEffect(() => {
     // Set a timeout to delay the visibility of the player to allow the fade-in effect
-    console.log("TESTING");
     const timeout = setTimeout(() => {
       setIsVisible(true);
     }, 100); // Adjust the delay as needed
@@ -89,8 +87,8 @@ export default function Experience(props) {
         <Sparkles
           count={amount}
           scale={20}
-          size={6}
-          speed={2.4}
+          size={50}
+          speed={2}
           color={"#00FF00"}
           position={[1, 2, 0]}
         />

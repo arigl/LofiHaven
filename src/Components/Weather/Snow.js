@@ -7,7 +7,7 @@ let camera,
   flash,
   rain,
   rainGeo,
-  rainCount = 15000;
+  rainCount = 3000;
 
 const Snow = (props) => {
   //   const rainCount = 1000; // Number of raindrops
@@ -21,9 +21,13 @@ const Snow = (props) => {
 
       // Create raindrop vertices
       for (let i = 0; i < rainCount; i++) {
-        positions.push(Math.random() * 400 - 200); // x position
-        positions.push(Math.random() * 500 - 250); // y position
-        positions.push(Math.random() * 400 - 200); // z position
+        positions.push(Math.random() * 100 - 50); // x position
+        positions.push(Math.random() * 100 - 50); // y position
+        positions.push(Math.random() * 100 - 50); // z position
+
+        // positions.push(Math.random() * 400 - 200); // x position
+        // positions.push(Math.random() * 500 - 250); // y position
+        // positions.push(Math.random() * 400 - 200); // z position
 
         velocities.push(0); // x velocity
         velocities.push(0); // y velocity
@@ -42,7 +46,7 @@ const Snow = (props) => {
 
       const material = new THREE.PointsMaterial({
         color: 0xaaaaaa,
-        size: 0.5,
+        size: 3.5,
         transparent: true,
       });
 
@@ -57,14 +61,15 @@ const Snow = (props) => {
       const animate = () => {
         rainGeo.attributes.position.array.forEach((p, i) => {
           if (i % 3 === 1) {
-            rainGeo.attributes.position.array[i] -= 0.1 + Math.random() * 0.1;
-            if (rainGeo.attributes.position.array[i] < -250) {
-              rainGeo.attributes.position.array[i] = 250;
+            rainGeo.attributes.position.array[i] -=
+              0.005 + Math.random() * 0.03;
+            if (rainGeo.attributes.position.array[i] < -50) {
+              rainGeo.attributes.position.array[i] = 50;
             }
           }
         });
         rainGeo.attributes.position.needsUpdate = true;
-        rain.rotation.y += 0.0005;
+        rain.rotation.y += 0.0001;
 
         requestAnimationFrame(animate);
       };

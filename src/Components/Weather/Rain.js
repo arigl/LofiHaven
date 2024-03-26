@@ -7,7 +7,7 @@ let camera,
   flash,
   rain,
   rainGeo,
-  rainCount = 15000;
+  rainCount = 6000;
 
 const Rain = (props) => {
   //   const rainCount = 1000; // Number of raindrops
@@ -21,9 +21,9 @@ const Rain = (props) => {
 
       // Create raindrop vertices
       for (let i = 0; i < rainCount; i++) {
-        positions.push(Math.random() * 400 - 200); // x position
-        positions.push(Math.random() * 500 - 250); // y position
-        positions.push(Math.random() * 400 - 200); // z position
+        positions.push(Math.random() * 100 - 50); // x position
+        positions.push(Math.random() * 100 - 50); // y position
+        positions.push(Math.random() * 100 - 50); // z position
 
         velocities.push(0); // x velocity
         velocities.push(0); // y velocity
@@ -42,7 +42,7 @@ const Rain = (props) => {
 
       const material = new THREE.PointsMaterial({
         color: 0x697a8c,
-        size: 0.3,
+        size: 2.3,
         transparent: true,
       });
 
@@ -57,14 +57,14 @@ const Rain = (props) => {
       const animate = () => {
         rainGeo.attributes.position.array.forEach((p, i) => {
           if (i % 3 === 1) {
-            rainGeo.attributes.position.array[i] -= 0.25 + Math.random() * 0.1;
-            if (rainGeo.attributes.position.array[i] < -250) {
-              rainGeo.attributes.position.array[i] = 250;
+            rainGeo.attributes.position.array[i] -= 0.05 + Math.random() * 0.06;
+            if (rainGeo.attributes.position.array[i] < -50) {
+              rainGeo.attributes.position.array[i] = 50;
             }
           }
         });
         rainGeo.attributes.position.needsUpdate = true;
-        rain.rotation.y += 0.002;
+        rain.rotation.y += 0.0005;
 
         requestAnimationFrame(animate);
       };

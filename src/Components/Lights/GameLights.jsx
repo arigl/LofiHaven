@@ -67,7 +67,7 @@ export function GameLights(props) {
         width={4}
         height={2}
         ref={tvLight}
-        position={[1.6, 2, -3]}
+        position={[1.4, 2, -3]}
         color="#00FFFF"
         intensity={15}
         lookAt={[0, 0, 0]}

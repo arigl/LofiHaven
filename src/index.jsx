@@ -12,6 +12,8 @@ import { BiExitFullscreen, BiWorld } from "react-icons/bi";
 import { IoSparklesSharp } from "react-icons/io5";
 import { IoMdSunny } from "react-icons/io";
 import { FaCloudRain, FaRegSnowflake } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
+
 import { Leva } from "leva";
 import { Loader, BakeShadows, useProgress } from "@react-three/drei";
 import musicData from "./data/musicData.js";
@@ -19,6 +21,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Timer from "./Components/Tools/Timer.jsx";
 import SceneLoader from "./Components/Loaders/SceneLoader.jsx";
 import SoundEffects from "./Components/Menus/SoundEffects.jsx";
+import { useControls } from "leva";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
@@ -136,6 +139,13 @@ function App() {
   const [canvasIsVisible, setCanvasVisible] = useState(true);
   const [playerIsVisible, setPlayerVisible] = useState(true);
 
+  const { cameraPosition } = useControls({
+    cameraPosition: {
+      value: { x: 100, y: 0, z: 100 },
+      step: 1,
+    },
+  });
+
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
   };
@@ -190,7 +200,7 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <Leva hidden />
+      <Leva />
       <Analytics />
       <div
         style={
@@ -224,12 +234,25 @@ function App() {
               : normalCanvasStyle
           }
           shadows
+          orthographic
           camera={{
-            fov: 45,
-            near: 0.1,
-            far: 200,
-            position: [8, 8, 15],
+            // top: 200,
+            // bottom: 200,
+            // left: 200,
+            // right: 200,
+            zoom: 75,
+            position: [100, 0, 100],
           }}
+          /*
+          camera={{
+            top: 200,
+            bottom: 200,
+            left: 200,
+            right: 200,
+            zoom: 75,
+            position: [100, 0, 100],
+          }}
+          */
         >
           <Suspense>
             <Experience
@@ -301,6 +324,21 @@ function App() {
               }}
             >
               {/* Button for each weather type */}
+              <button
+                onClick={() => handleWeatherChange("")}
+                style={{
+                  background: "#070F2B",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  // margin: "5px",
+                  padding: "10px",
+                }}
+              >
+                <IconContext.Provider value={{ size: "2em", color: "#ffffff" }}>
+                  <IoIosCloseCircle />
+                </IconContext.Provider>
+              </button>
               <button
                 onClick={() => handleWeatherChange("rain")}
                 style={{

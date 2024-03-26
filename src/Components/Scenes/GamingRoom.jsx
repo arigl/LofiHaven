@@ -4,13 +4,55 @@ Command: npx gltfjsx@6.2.16 GamingRoom.glb --transform
 Files: GamingRoom.glb [30.19MB] > C:\Users\alexr\Documents\Development\Lofi site\public\GamingRoom-transformed.glb [2.01MB] (93%)
 */
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { OrbitControls } from "@react-three/drei";
 import { GameLights } from "../Lights/GameLights";
+import * as THREE from "three";
+
+import { VideoTexture } from "three";
 
 export function GamingRoom(props) {
   const { nodes, materials } = useGLTF("/Gaming-transformed.glb");
+  const videoTexture = useRef(null);
+  const video = document.createElement("video");
+  const [showVideo, setShowVideo] = useState(true);
+
+  const loadVideoTexture = () => {
+    //const video = document.createElement("video");
+    console.log("load video texture");
+    if (videoTexture.current) {
+      console.log("current");
+    }
+    video.src = "/Videos/Fireplace10.mp4";
+    video.crossOrigin = "anonymous";
+    video.loop = true;
+    video.muted = true;
+    video.play();
+    videoTexture.current = new VideoTexture(video);
+    videoTexture.current.minFilter = THREE.LinearFilter;
+    videoTexture.current.magFilter = THREE.LinearFilter;
+    videoTexture.current.format = THREE.RGBAFormat;
+    videoTexture.current.flipY = false;
+  };
+
+  useEffect(() => {
+    console.log("use effect");
+    if (showVideo == true) {
+      loadVideoTexture();
+    }
+  }, [videoTexture]);
+
+  const clickHandler = () => {
+    // console.log("click TV");
+    // if (showVideo == true) {
+    //   video.pause();
+    //   setShowVideo(false);
+    //   videoTexture.current = null; // Reset video texture
+    // } else {
+    //   loadVideoTexture();
+    // }
+  };
 
   return (
     <group {...props} dispose={null}>
@@ -130,10 +172,16 @@ export function GamingRoom(props) {
         rotation={[-1.785, -0.044, -0.527]}
         scale={[2.154, 2.494, 2.411]}
       />
-      <group position={[1.492, 2.084, -3.444]} scale={[2.66, 2.41, 2.62]}>
+      {/* {loadVideoTexture()} */}
+      <group
+        position={[1.492, 2.084, -3.444]}
+        scale={[2.66, 2.41, 2.62]}
+        onClick={clickHandler}
+      >
         <mesh
           geometry={nodes.TV_1.geometry}
-          material={materials["Screen (tv)"]}
+          //material={materials["Screen (tv)"]}
+          material={new THREE.MeshBasicMaterial({ map: videoTexture.current })}
         />
         <mesh
           geometry={nodes.TV_2.geometry}

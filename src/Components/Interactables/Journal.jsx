@@ -21,22 +21,20 @@ export function Journal(props) {
   });
 
   const clickHandler = () => {
-    console.log("clicked journal");
-    // Calculate position to look at
-    //const positionToLookAt = new THREE.Vector3(-0.814, 1.791, 1.356);
-
-    // change min distance for orbit controls to 5 when u click on it
-    const positionToLookAt = new THREE.Vector3(
-      position.x,
-      position.y,
-      position.z
-    );
-    // Update camera position and look at the object
-    // 2.480389002089786 4.40414756524218 1.1471373633335114
-    // 2.1854207345931416 4.522136416019444 1.2298233854575975
-
-    camera.position.copy(positionToLookAt);
-    camera.lookAt(positionToLookAt);
+    // console.log("clicked journal");
+    // // Calculate position to look at
+    // //const positionToLookAt = new THREE.Vector3(-0.814, 1.791, 1.356);
+    // // change min distance for orbit controls to 5 when u click on it
+    // const positionToLookAt = new THREE.Vector3(
+    //   position.x,
+    //   position.y,
+    //   position.z
+    // );
+    // // Update camera position and look at the object
+    // // 2.480389002089786 4.40414756524218 1.1471373633335114
+    // // 2.1854207345931416 4.522136416019444 1.2298233854575975
+    // camera.position.copy(positionToLookAt);
+    // camera.lookAt(positionToLookAt);
   };
 
   const pointerEnterHandler = () => {
@@ -45,18 +43,7 @@ export function Journal(props) {
   };
 
   return (
-    <group
-      {...props}
-      dispose={null}
-      onClick={clickHandler}
-      onPointerOver={pointerEnterHandler}
-      onPointerEnter={() => {
-        document.body.style.cursor = "pointer";
-      }}
-      onPointerLeave={() => {
-        document.body.style.cursor = "default";
-      }}
-    >
+    <group {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
