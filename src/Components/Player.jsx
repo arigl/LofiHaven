@@ -171,8 +171,8 @@ export default function Player(props) {
   };
 
   const imageHeaderStyle = {
-    maxWidth: "30px",
-    maxHeight: "30px",
+    maxWidth: "20px",
+    maxHeight: "20px",
   };
 
   const seperatorStyle = {
@@ -190,6 +190,7 @@ export default function Player(props) {
               src="/Menu.png"
               style={imageHeaderStyle}
             ></img>
+            <h1 className="header--menu--text">Search</h1>
           </button>
           <h1 className="header--title">Lofi Haven</h1>
           <h1 style={seperatorStyle}>|</h1>

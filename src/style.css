@@ -39,10 +39,23 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.menu--button--icon {
+  width: 10px;
+  height: 20px;
+  padding: 5px;
+}
+
+.header--menu--text {
+  color: white;
+  font-family: "Ubuntu";
+  font-weight: 200;
+  font-size: 0.8rem;
 }
 
 .header--title {
@@ -62,8 +75,8 @@ body,
 */
 
 .menu--button--icon {
-  width: "30px";
-  height: "30px";
+  width: 30px;
+  height: 30px;
   border-radius: 5px;
 }
 
