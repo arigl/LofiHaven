@@ -37,9 +37,9 @@ export function ChillRoom(props) {
     size.width,
     size.height
   );
-  if (!isFocused) {
-    camera.position.set(100, 0, 100);
-  }
+  // if (!isFocused) {
+  //   camera.position.set(100, 0, 100);
+  // }
 
   const clockCameraProps = {
     fov: 75,
